@@ -1,7 +1,7 @@
 NAME = megaphone
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -std=c++98
 COMPILER = c++
-HEADER = 
+#HEADER = 
 
 #S_DIR = src
 CFILES = megaphone.cpp
