@@ -1,12 +1,8 @@
 NAME = megaphone
 FLAGS = -Wall -Wextra -Werror -std=c++98
 COMPILER = c++
-#HEADER = 
 
-#S_DIR = src
 CFILES = megaphone.cpp
-
-#O_DIR = objdir
 OFILES = $(CFILES:%.cpp=%.o)
 
 all: $(NAME)
@@ -15,10 +11,7 @@ $(NAME): $(OFILES)
 	$(COMPILER) $(FLAGS) $(OFILES) -o $(NAME)
 	@echo "\033[33m** Program created **\033[0m"
 
-#$(O_DIR):
-#	mkdir -p $@
-
-$%.o: %.cpp $(HEADER)
+$%.o: %.cpp
 	$(COMPILER) $(FLAGS) -c -Iinc $< -o $@
 
 clean:
