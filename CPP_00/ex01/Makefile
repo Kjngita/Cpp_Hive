@@ -1,29 +1,32 @@
 NAME = call_me_maybe
 FLAGS = -Wall -Wextra -Werror -std=c++98
 COMPILER = c++
-HEADER = classes.hpp
 
-#S_DIR = src
-CFILES = 
+CFILES = main.cpp Contact.cpp PhoneBook.cpp
 
-#O_DIR = objdir
-OFILES = $(CFILES:%.cpp=%.o)
+O_DIR =  objdir
+OFILES = $(CFILES:%.cpp=$(O_DIR)/%.o)
+
+D_DIR = depdir
+DFILES = $(CFILES:%.cpp=$(D_DIR)/%.d)
 
 all: $(NAME)
+
+-include $(DFILES)
 
 $(NAME): $(OFILES)
 	$(COMPILER) $(FLAGS) $(OFILES) -o $(NAME)
 	@echo "\033[33m** Program created **\033[0m"
 
-#$(O_DIR):
-#	mkdir -p $@
+$(O_DIR) $(D_DIR):
+	mkdir -p $@
 
-$%.o: %.cpp $(HEADER)
-	$(COMPILER) $(FLAGS) -c -Iinc $< -o $@
+$(O_DIR)/%.o: %.cpp | $(O_DIR) $(D_DIR)
+	$(COMPILER) $(FLAGS) -MMD -MP -MF $(D_DIR)/$*.d -c $< -o $@
 
 clean:
-	rm -f $(OFILES)
-	@echo "\033[33m** Object files deleted **\033[0m"
+	rm -rf $(O_DIR) $(D_DIR)
+	@echo "\033[33m** Object/Dependency files deleted **\033[0m"
 
 fclean: clean
 	rm -f $(NAME)
@@ -31,7 +34,7 @@ fclean: clean
 
 re: fclean all
 
-.SECONDARY: $(OFILES)
+.SECONDARY: $(OFILES) $(DFILES)
 
 .PHONY: all clean fclean re
 

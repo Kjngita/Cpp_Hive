@@ -12,7 +12,7 @@ int main(int ac, char **av)
 	while (av[i])
 	{
 		std::string line = av[i];
-		for (int j = 0; j < line.length(); j++)
+		for (size_t j = 0; j < line.length(); j++)
 		{
 			line[j] = std::toupper((unsigned char)line[j]);
 		}
