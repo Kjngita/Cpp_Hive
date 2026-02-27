@@ -1,5 +1,5 @@
 NAME = call_me_maybe
-FLAGS = -Wall -Wextra -Werror -std=c++98
+FLAGS = -Wall -Wextra -Werror -std=c++98 -g
 COMPILER = c++
 
 CFILES = main.cpp Contact.cpp PhoneBook.cpp
@@ -22,7 +22,7 @@ $(O_DIR) $(D_DIR):
 	mkdir -p $@
 
 $(O_DIR)/%.o: %.cpp | $(O_DIR) $(D_DIR)
-	$(COMPILER) $(FLAGS) -MMD -MP -MF $(D_DIR)/$*.d -c $< -o $@
+	$(COMPILER) $(FLAGS) -Iinc -MMD -MP -MF $(D_DIR)/$*.d -c $< -o $@
 
 clean:
 	rm -rf $(O_DIR) $(D_DIR)

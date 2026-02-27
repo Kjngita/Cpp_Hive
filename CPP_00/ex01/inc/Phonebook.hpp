@@ -6,10 +6,10 @@
 class PhoneBook
 {
 	public:
-		int		entries[8];
+		Contact	entries[8];
 		PhoneBook();
 		~PhoneBook();
-		void	addContact();
+		Contact	addContact();
 };
 
 #endif
