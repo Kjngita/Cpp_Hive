@@ -4,10 +4,10 @@ COMPILER = c++
 
 CFILES = main.cpp Contact.cpp PhoneBook.cpp
 
-O_DIR =  objdir
+O_DIR =  obj
 OFILES = $(CFILES:%.cpp=$(O_DIR)/%.o)
 
-D_DIR = depdir
+D_DIR = dep
 DFILES = $(CFILES:%.cpp=$(D_DIR)/%.d)
 
 all: $(NAME)

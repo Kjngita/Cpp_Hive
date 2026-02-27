@@ -4,10 +4,10 @@ COMPILER = c++
 
 CFILES = megaphone.cpp
 
-O_DIR =  objdir
+O_DIR =  obj
 OFILES = $(CFILES:%.cpp=$(O_DIR)/%.o)
 
-D_DIR = depdir
+D_DIR = dep
 DFILES = $(CFILES:%.cpp=$(D_DIR)/%.d)
 
 all: $(NAME)
@@ -16,7 +16,7 @@ all: $(NAME)
 
 $(NAME): $(OFILES)
 	$(COMPILER) $(FLAGS) $(OFILES) -o $(NAME)
-	@echo "\033[33m** Program created **\033[0m"
+	@echo "\033[33m~✧*｡⋆ Program created ⋆｡*✧~\033[0m"
 
 $(O_DIR) $(D_DIR):
 	mkdir -p $@
@@ -26,11 +26,11 @@ $(O_DIR)/%.o: %.cpp | $(O_DIR) $(D_DIR)
 
 clean:
 	rm -rf $(O_DIR) $(D_DIR)
-	@echo "\033[33m** Object/Dependency files deleted **\033[0m"
+	@echo "\033[33m~✧*｡⋆ Object/Dependency files deleted ⋆｡*✧~\033[0m"
 
 fclean: clean
 	rm -f $(NAME)
-	@echo "\033[33m** Program deleted **\033[0m"
+	@echo "\033[33m~✧*｡⋆ Program deleted ⋆｡*✧~\033[0m"
 
 re: fclean all
 
