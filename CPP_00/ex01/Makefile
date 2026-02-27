@@ -2,13 +2,13 @@ NAME = call_me_maybe
 FLAGS = -Wall -Wextra -Werror -std=c++98 -g
 COMPILER = c++
 
-CFILES = main.cpp Contact.cpp PhoneBook.cpp
+SRC_FILES = main.cpp Contact.cpp PhoneBook.cpp
 
 O_DIR =  obj
-OFILES = $(CFILES:%.cpp=$(O_DIR)/%.o)
+OFILES = $(SRC_FILES:%.cpp=$(O_DIR)/%.o)
 
 D_DIR = dep
-DFILES = $(CFILES:%.cpp=$(D_DIR)/%.d)
+DFILES = $(SRC_FILES:%.cpp=$(D_DIR)/%.d)
 
 all: $(NAME)
 

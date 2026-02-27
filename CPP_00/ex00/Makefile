@@ -2,13 +2,13 @@ NAME = megaphone
 FLAGS = -Wall -Wextra -Werror -std=c++98
 COMPILER = c++
 
-CFILES = megaphone.cpp
+SRC_FILES = megaphone.cpp
 
 O_DIR =  obj
-OFILES = $(CFILES:%.cpp=$(O_DIR)/%.o)
+OFILES = $(SRC_FILES:%.cpp=$(O_DIR)/%.o)
 
 D_DIR = dep
-DFILES = $(CFILES:%.cpp=$(D_DIR)/%.d)
+DFILES = $(SRC_FILES:%.cpp=$(D_DIR)/%.d)
 
 all: $(NAME)
 
