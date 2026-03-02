@@ -4,7 +4,6 @@
 int main()
 {
 	PhoneBook	book;
-	int i = 0;
 	while (1)
 	{
 		std::cout << "> ";
@@ -12,15 +11,13 @@ int main()
 		std::cin >> cmd;
 		if (cmd == "ADD")
 		{
-			if (i >= 8)
-				i = i % 8;
-			book.entries[i] = book.addContact();
-			i++;
+			book.addContact();
 			continue;
 		}
 		else if (cmd == "SEARCH")
 		{
-			std::cout << "~~Search mode~~\n";
+			book.showEntries();
+			book.searchContact();
 			continue;
 		}
 		else if (cmd == "EXIT")

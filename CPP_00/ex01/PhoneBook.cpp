@@ -1,6 +1,8 @@
 #include "Phonebook.hpp"
 
-PhoneBook::PhoneBook() {}
+PhoneBook::PhoneBook() {
+	_position = 0;
+}
 
 PhoneBook::~PhoneBook() {}
 
@@ -24,13 +26,14 @@ static int	input_ok(int i, std::string input)
 	}
 }
 
-Contact	PhoneBook::addContact()
+void	PhoneBook::addContact()
 {
-	Contact new_entry;
 	std::string input;
 	std::string	prompt[5] = {"First name: ", "Last name: ", "Nickname: ", 
 							"Phone number: ", "Spill the tea will you?: "};
-	int	i = 0;
+	if (_position >= 8)
+		_position = _position % 8;
+	int i = 0;
 	while (i < 5)
 	{
 		std::cout << prompt[i];
@@ -38,17 +41,57 @@ Contact	PhoneBook::addContact()
 		if (!input_ok(i, input))
 			continue ;
 		if (i == 0)
-			new_entry.FirstName = input;
+			_entries[_position].FirstName = input;
 		else if (i == 1)
-			new_entry.LastName = input;
+			_entries[_position].LastName = input;
 		else if (i == 2)
-			new_entry.setNickname(input);
+			_entries[_position].Nickname = input;
 		else if (i == 3)
-			new_entry.setNumber(input);		
+			_entries[_position].setNumber(input);		
 		else if (i == 4)
-			new_entry.setSecret(input);
+			_entries[_position].setSecret(input);
 		i++;
 	}
-	return (new_entry);
+	_entries[_position].index = _position + 1;
+	_position++;
+	return ;
 }
 
+void	PhoneBook::showEntries()
+{
+	std::cout << "BEST PHONEBOOK IN TOWN\n";
+}
+
+void	PhoneBook::searchContact()
+{
+	std::cout << "Index of the person you'd like to stalk: ";
+	int j;
+	if (!(std::cin >> j))
+	{
+		std::cout << "Need a number (1 - 8) here\n";
+		std::cin.clear();
+		std::cin.ignore(10000, '\n');
+		return ;
+	}
+	if (j < 1 || j > 8)
+	{
+		std::cout << "Index not within range\n";
+		return ;
+	}
+	if (_entries[j - 1].FirstName.empty())
+		std::cout << "No contact found for this index" << std::endl;
+	else
+	{
+		std::string	output;
+
+		std::cout << _entries[j - 1].FirstName << std::endl;
+		std::cout << _entries[j - 1].LastName << std::endl;
+		std::cout << _entries[j - 1].Nickname << std::endl;
+		output = _entries[j - 1].getNumber();
+		std::cout << output << std::endl;
+		output.clear();
+		output = _entries[j - 1].getSecret();
+		std::cout << output << std::endl;
+	}
+	return ;
+}

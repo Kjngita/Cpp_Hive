@@ -10,16 +10,14 @@ class Contact
 		int			index;
 		std::string	FirstName;
 		std::string	LastName;
+		std::string	Nickname;
 		Contact();
 		~Contact();
-		void	setNickname(std::string name);
 		void	setNumber(std::string number);
 		void	setSecret(std::string secret);
 		std::string	getNumber();
-		std::string	getNickname();
 		std::string	getSecret();
 	private:
-		std::string	Nickname;
 		std::string	Number;
 		std::string	Secret;
 };

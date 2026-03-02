@@ -6,10 +6,14 @@
 class PhoneBook
 {
 	public:
-		Contact	entries[8];
 		PhoneBook();
 		~PhoneBook();
-		Contact	addContact();
+		void	addContact();
+		void	searchContact();
+		void	showEntries();
+	private:
+		Contact	_entries[8];
+		int		_position;
 };
 
 #endif
