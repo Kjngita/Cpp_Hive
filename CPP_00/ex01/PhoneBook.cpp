@@ -10,10 +10,10 @@ static int	input_ok(int i, std::string input)
 {
 	size_t j;
 
-	if (i == 3) //phone number
+	if (i == 3)
 	{
 		for (j = 0; j < input.length(); j++)
-			if (!isdigit(input[j])) //is it ok to use C libraries?
+			if (!isdigit(input[j]))
 				return (0);
 		return (1);
 	}
@@ -30,19 +30,19 @@ void	PhoneBook::addContact()
 {
 	std::string input;
 	std::string	prompt[5] = {"First name: ", "Last name: ", "Nickname: ", 
-							"Phone number: ", "Spill the tea will you?: "};
+							"Phone number: ", "Spoil the secret: "};
 	if (_position >= 8)
 		_position = _position % 8;
 	int i = 0;
 	while (i < 5)
 	{
 		std::cout << prompt[i];
-		std::cin >> input;
 		if (std::cin.eof())
 		{
 			std::cout << "But wait we're not done\n";
 			break ;
 		}
+		std::cin >> input;
 		if (!input_ok(i, input))
 			continue ;
 		if (i == 0)
@@ -62,7 +62,7 @@ void	PhoneBook::addContact()
 	return ;
 }
 
-void	displayText(std::string text)
+static void	displayText(std::string text)
 {
 	if (text.length() > 10)
 	{
@@ -74,11 +74,11 @@ void	displayText(std::string text)
 	}
 	else if (text.length() < 10)
 	{
-		int quantity = 10 - text.length();
-		while (quantity > 0)
+		int fillers = 10 - text.length();
+		while (fillers > 0)
 		{
 			std::cout << " ";
-			quantity--;
+			fillers--;
 		}
 	}
 	std::cout << text;
@@ -127,19 +127,20 @@ void	PhoneBook::searchContact()
 		std::cout << "Index not within range (1 - 8)\n";
 		return ;
 	}
-	if (_entries[j - 1].FirstName.empty())
+	int	i = j - 1;
+	if (_entries[i].FirstName.empty())
 		std::cout << "No contact found for this index\n";
 	else
 	{
 		std::string	output;
 
-		std::cout << "First name: " << _entries[j - 1].FirstName << std::endl;
-		std::cout << "Last name: " << _entries[j - 1].LastName << std::endl;
-		std::cout << "Nickname: " << _entries[j - 1].Nickname << std::endl;
-		output = _entries[j - 1].getNumber();
+		std::cout << "First name: " << _entries[i].FirstName << std::endl;
+		std::cout << "Last name: " << _entries[i].LastName << std::endl;
+		std::cout << "Nickname: " << _entries[i].Nickname << std::endl;
+		output = _entries[i].getNumber();
 		std::cout << "Number: " << output << std::endl;
 		output.clear();
-		output = _entries[j - 1].getSecret();
+		output = _entries[i].getSecret();
 		std::cout << "Secret: " << output << std::endl;
 	}
 	return ;
