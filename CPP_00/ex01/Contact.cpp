@@ -4,22 +4,44 @@ Contact::Contact() {}
 
 Contact::~Contact() {}
 
-void Contact::setNumber(std::string number)
+void Contact::setParam(std::string str, int	param)
 {
-	Number = number;
+	if (param == 'F')
+		_firstname = str;
+	else if (param == 'L')
+		_lastname = str;
+	else if (param == 'N')
+		_nickname = str;
+	else if (param == 'P')
+		_phonenum = str;
+	else if (param == 'S')
+		_secret = str;
+	else
+		return ;
 }
 
-void Contact::setSecret(std::string secret)
+void	Contact::setIndex(int index)
 {
-	Secret = secret;
+	_index = index;
 }
 
-std::string	Contact::getNumber()
+int	Contact::getIndex()
 {
-	return (Number);
+	return(_index);
 }
 
-std::string	Contact::getSecret()
+std::string	Contact::getParam(int param)
 {
-	return (Secret);
+	if (param == 'F')
+		return (_firstname);
+	else if (param == 'L')
+		return (_lastname);
+	else if (param == 'N')
+		return (_nickname);
+	else if (param == 'P')
+		return (_phonenum);
+	else if (param == 'S')
+		return (_secret);
+	else
+		return ("Error getting param");
 }

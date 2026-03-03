@@ -46,18 +46,18 @@ void	PhoneBook::addContact()
 		if (!input_ok(i, input))
 			continue ;
 		if (i == 0)
-			_entries[_position].FirstName = input;
+			_entries[_position].setParam(input, 'F');
 		else if (i == 1)
-			_entries[_position].LastName = input;
+			_entries[_position].setParam(input, 'L');
 		else if (i == 2)
-			_entries[_position].Nickname = input;
+			_entries[_position].setParam(input, 'N');
 		else if (i == 3)
-			_entries[_position].setNumber(input);	
+			_entries[_position].setParam(input, 'P');	
 		else if (i == 4)
-			_entries[_position].setSecret(input);
+			_entries[_position].setParam(input, 'S');
 		i++;
 	}
-	_entries[_position].index = _position + 1;
+	_entries[_position].setIndex(_position + 1);
 	_position++;
 	return ;
 }
@@ -97,15 +97,15 @@ void	PhoneBook::showEntries()
 	}
 	std::cout << std::endl;
 	i = 0;
-	while (i < 8 && !_entries[i].FirstName.empty())
+	while (i < 8 && !_entries[i].getParam('F').empty())
 	{
-		std::cout << "         " << _entries[i].index;
+		std::cout << "         " << _entries[i].getIndex();
 		std::cout << "|";
-		displayText(_entries[i].FirstName);
+		displayText(_entries[i].getParam('F'));
 		std::cout << "|";
-		displayText(_entries[i].LastName);
+		displayText(_entries[i].getParam('L'));
 		std::cout << "|";
-		displayText(_entries[i].Nickname);
+		displayText(_entries[i].getParam('N'));
 		std::cout << std::endl;
 		i++;
 	}
@@ -128,20 +128,17 @@ void	PhoneBook::searchContact()
 		return ;
 	}
 	int	i = j - 1;
-	if (_entries[i].FirstName.empty())
+	if (_entries[i].getParam('F').empty())
 		std::cout << "No contact found for this index\n";
 	else
 	{
 		std::string	output;
 
-		std::cout << "First name: " << _entries[i].FirstName << std::endl;
-		std::cout << "Last name: " << _entries[i].LastName << std::endl;
-		std::cout << "Nickname: " << _entries[i].Nickname << std::endl;
-		output = _entries[i].getNumber();
-		std::cout << "Number: " << output << std::endl;
-		output.clear();
-		output = _entries[i].getSecret();
-		std::cout << "Secret: " << output << std::endl;
+		std::cout << "First name: " << _entries[i].getParam('F') << std::endl;
+		std::cout << "Last name: " << _entries[i].getParam('L') << std::endl;
+		std::cout << "Nickname: " << _entries[i].getParam('N') << std::endl;
+		std::cout << "Number: " << _entries[i].getParam('P') << std::endl;
+		std::cout << "Secret: " << _entries[i].getParam('S') << std::endl;
 	}
 	return ;
 }

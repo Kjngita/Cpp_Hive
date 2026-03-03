@@ -7,19 +7,20 @@
 class Contact
 {
 	public:
-		int			index;
-		std::string	FirstName;
-		std::string	LastName;
-		std::string	Nickname;
 		Contact();
 		~Contact();
-		void	setNumber(std::string number);
-		void	setSecret(std::string secret);
-		std::string	getNumber();
-		std::string	getSecret();
+		void		setIndex(int index);
+		int			getIndex();
+		void 		setParam(std::string str, int param);
+		std::string	getParam(int param);
+
 	private:
-		std::string	Number;
-		std::string	Secret;
+		int			_index;
+		std::string	_firstname;
+		std::string	_lastname;
+		std::string	_nickname;
+		std::string	_phonenum;
+		std::string	_secret;
 };
 
 #endif
