@@ -6,6 +6,8 @@ int main()
 	PhoneBook	book;
 	while (1)
 	{
+		std::cout << "- - - - - - - -  - - - - - - - - -\n";
+		std::cout << "Enter command: ADD / SEARCH / EXIT\n";
 		std::cout << "> ";
 		std::string cmd;
 		std::cin >> cmd;
@@ -20,7 +22,7 @@ int main()
 			book.searchContact();
 			continue;
 		}
-		else if (cmd == "EXIT")
+		else if (cmd == "EXIT" || std::cin.eof())
 			break;
 		else
 			continue;

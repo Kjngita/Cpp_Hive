@@ -38,6 +38,11 @@ void	PhoneBook::addContact()
 	{
 		std::cout << prompt[i];
 		std::cin >> input;
+		if (std::cin.eof())
+		{
+			std::cout << "But wait we're not done\n";
+			break ;
+		}
 		if (!input_ok(i, input))
 			continue ;
 		if (i == 0)
@@ -47,7 +52,7 @@ void	PhoneBook::addContact()
 		else if (i == 2)
 			_entries[_position].Nickname = input;
 		else if (i == 3)
-			_entries[_position].setNumber(input);		
+			_entries[_position].setNumber(input);	
 		else if (i == 4)
 			_entries[_position].setSecret(input);
 		i++;
@@ -57,9 +62,53 @@ void	PhoneBook::addContact()
 	return ;
 }
 
+void	displayText(std::string text)
+{
+	if (text.length() > 10)
+	{
+		std::string	shortened;
+		shortened.append(text, 0, 9);
+		shortened.append(1, '.');
+		std::cout << shortened;
+		return ;
+	}
+	else if (text.length() < 10)
+	{
+		int quantity = 10 - text.length();
+		while (quantity > 0)
+		{
+			std::cout << " ";
+			quantity--;
+		}
+	}
+	std::cout << text;
+}
+
 void	PhoneBook::showEntries()
 {
-	std::cout << "BEST PHONEBOOK IN TOWN\n";
+	std::string text[4] = {"INDEX", "FIRST NAME", "LAST NAME", "NICKNAME"};
+	int i = 0;
+	while (i < 4)
+	{
+		displayText(text[i]);
+		if (i < 3)
+			std::cout << "|";
+		i++;
+	}
+	std::cout << std::endl;
+	i = 0;
+	while (i < 8 && !_entries[i].FirstName.empty())
+	{
+		std::cout << "         " << _entries[i].index;
+		std::cout << "|";
+		displayText(_entries[i].FirstName);
+		std::cout << "|";
+		displayText(_entries[i].LastName);
+		std::cout << "|";
+		displayText(_entries[i].Nickname);
+		std::cout << std::endl;
+		i++;
+	}
 }
 
 void	PhoneBook::searchContact()
@@ -75,23 +124,23 @@ void	PhoneBook::searchContact()
 	}
 	if (j < 1 || j > 8)
 	{
-		std::cout << "Index not within range\n";
+		std::cout << "Index not within range (1 - 8)\n";
 		return ;
 	}
 	if (_entries[j - 1].FirstName.empty())
-		std::cout << "No contact found for this index" << std::endl;
+		std::cout << "No contact found for this index\n";
 	else
 	{
 		std::string	output;
 
-		std::cout << _entries[j - 1].FirstName << std::endl;
-		std::cout << _entries[j - 1].LastName << std::endl;
-		std::cout << _entries[j - 1].Nickname << std::endl;
+		std::cout << "First name: " << _entries[j - 1].FirstName << std::endl;
+		std::cout << "Last name: " << _entries[j - 1].LastName << std::endl;
+		std::cout << "Nickname: " << _entries[j - 1].Nickname << std::endl;
 		output = _entries[j - 1].getNumber();
-		std::cout << output << std::endl;
+		std::cout << "Number: " << output << std::endl;
 		output.clear();
 		output = _entries[j - 1].getSecret();
-		std::cout << output << std::endl;
+		std::cout << "Secret: " << output << std::endl;
 	}
 	return ;
 }
