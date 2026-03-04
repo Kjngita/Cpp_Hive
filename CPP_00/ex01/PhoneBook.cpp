@@ -132,8 +132,6 @@ void	PhoneBook::searchContact()
 		std::cout << "No contact found for this index\n";
 	else
 	{
-		std::string	output;
-
 		std::cout << "First name: " << _entries[i].getParam('F') << std::endl;
 		std::cout << "Last name: " << _entries[i].getParam('L') << std::endl;
 		std::cout << "Nickname: " << _entries[i].getParam('N') << std::endl;
