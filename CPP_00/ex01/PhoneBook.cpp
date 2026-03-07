@@ -13,14 +13,14 @@ static int	input_ok(int i, std::string input)
 	if (i == 3)
 	{
 		for (j = 0; j < input.length(); j++)
-			if (!isdigit(input[j]))
+			if (!isdigit(input[j]) && input[j] != ' ')
 				return (0);
 		return (1);
 	}
 	else
 	{
 		for (j = 0; j < input.length(); j++)
-			if (!isalnum(input[j]))
+			if (!isalnum(input[j]) && input[j] != ' ')
 				return (0);
 		return (1);
 	}
@@ -37,12 +37,20 @@ void	PhoneBook::addContact()
 	while (i < 5)
 	{
 		std::cout << prompt[i];
-		if (std::cin.eof())
+		if (std::cin.eof()) //still prints prompt
 		{
+			input.clear();
 			std::cout << "But wait we're not done\n";
 			break ;
 		}
-		std::cin >> input;
+		std::getline(std::cin, input);
+		if (input.empty())
+		{
+			// std::cout << "But wait we're not done\n";
+			input.clear();
+			continue ;
+		}
+		// std::cin >> input;
 		if (!input_ok(i, input))
 			continue ;
 		if (i == 0)
@@ -55,6 +63,7 @@ void	PhoneBook::addContact()
 			_entries[_position].setParam(input, 'P');	
 		else if (i == 4)
 			_entries[_position].setParam(input, 'S');
+		input.clear();
 		i++;
 	}
 	_entries[_position].setIndex(_position + 1);
@@ -114,15 +123,22 @@ void	PhoneBook::showEntries()
 void	PhoneBook::searchContact()
 {
 	std::cout << "Index of the person you'd like to stalk: ";
-	int j;
-	if (!(std::cin >> j))
+	std::string input;
+	std::getline(std::cin, input);
+	if (input.empty() || !input_ok(3, input))
 	{
 		std::cout << "Need a number (1 - 8) here\n";
-		std::cin.clear();
-		std::cin.ignore(10000, '\n');
 		return ;
 	}
-	if (j < 1 || j > 8)
+	// if (!(std::cin >> j))
+	// {
+	// 	std::cout << "Need a number (1 - 8) here\n";
+	// 	std::cin.clear();
+	// 	std::cin.ignore(10000, '\n');
+	// 	return ;
+	// }
+	int j = input[0] - '0';
+	if (input.length() != 1 && (j < 1 || j > 8))
 	{
 		std::cout << "Index not within range (1 - 8)\n";
 		return ;
