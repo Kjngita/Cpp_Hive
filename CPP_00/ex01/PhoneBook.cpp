@@ -37,20 +37,14 @@ void	PhoneBook::addContact()
 	while (i < 5)
 	{
 		std::cout << prompt[i];
-		if (std::cin.eof()) //still prints prompt
-		{
-			input.clear();
-			std::cout << "But wait we're not done\n";
-			break ;
-		}
 		std::getline(std::cin, input);
-		if (input.empty())
+		if (std::cin.eof())
 		{
-			// std::cout << "But wait we're not done\n";
-			input.clear();
-			continue ;
+			std::cout << "[But wait we're not done]\n";
+			return ;
 		}
-		// std::cin >> input;
+		if (input.empty())
+			continue ;
 		if (!input_ok(i, input))
 			continue ;
 		if (i == 0)
@@ -130,15 +124,8 @@ void	PhoneBook::searchContact()
 		std::cout << "Need a number (1 - 8) here\n";
 		return ;
 	}
-	// if (!(std::cin >> j))
-	// {
-	// 	std::cout << "Need a number (1 - 8) here\n";
-	// 	std::cin.clear();
-	// 	std::cin.ignore(10000, '\n');
-	// 	return ;
-	// }
 	int j = input[0] - '0';
-	if (input.length() != 1 && (j < 1 || j > 8))
+	if (input.length() != 1 || j < 1 || j > 8)
 	{
 		std::cout << "Index not within range (1 - 8)\n";
 		return ;

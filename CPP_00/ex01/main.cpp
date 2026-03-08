@@ -11,7 +11,6 @@ int main()
 		std::cout << "> ";
 		std::string cmd;
 		std::getline(std::cin, cmd);
-		// std::cin >> cmd;
 		if (cmd == "ADD")
 		{
 			book.addContact();
@@ -23,7 +22,7 @@ int main()
 			book.searchContact();
 			continue;
 		}
-		else if (cmd == "EXIT" || cmd.empty())
+		else if (cmd == "EXIT" || std::cin.eof())
 			break;
 		else
 			continue;
