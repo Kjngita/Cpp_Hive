@@ -4,6 +4,16 @@ Contact::Contact() {}
 
 Contact::~Contact() {}
 
+void	Contact::setIndex(int index)
+{
+	_index = index;
+}
+
+int	Contact::getIndex()
+{
+	return(_index);
+}
+
 static std::string trim_spaces(std::string str)
 {
 	int i = 0;
@@ -30,16 +40,6 @@ void Contact::setParam(std::string str, int	param)
 		_secret = trim_spaces(str);
 	else
 		return ;
-}
-
-void	Contact::setIndex(int index)
-{
-	_index = index;
-}
-
-int	Contact::getIndex()
-{
-	return(_index);
 }
 
 std::string	Contact::getParam(int param)
