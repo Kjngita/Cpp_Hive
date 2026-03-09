@@ -4,18 +4,30 @@ Contact::Contact() {}
 
 Contact::~Contact() {}
 
+static std::string trim_spaces(std::string str)
+{
+	int i = 0;
+	while (str[i] && str[i] == ' ')
+		i++;
+	int j = str.length();
+	while (j > i && str[j - 1] == ' ')
+		j--;
+	std::string chopped = str.substr(i, j - i);
+	return (chopped);
+}
+
 void Contact::setParam(std::string str, int	param)
 {
 	if (param == 'F')
-		_firstname = str;
+		_firstname = trim_spaces(str);
 	else if (param == 'L')
-		_lastname = str;
+		_lastname = trim_spaces(str);
 	else if (param == 'N')
-		_nickname = str;
+		_nickname = trim_spaces(str);
 	else if (param == 'P')
-		_phonenum = str;
+		_phonenum = trim_spaces(str);
 	else if (param == 'S')
-		_secret = str;
+		_secret = trim_spaces(str);
 	else
 		return ;
 }

@@ -6,6 +6,16 @@ PhoneBook::PhoneBook() {
 
 PhoneBook::~PhoneBook() {}
 
+static int input_only_spaces(std::string input)
+{
+	int i = 0;
+	while (input[i] && input[i] == ' ')
+		i++;
+	if (input[i] == '\0')
+		return (1);
+	return (0);
+}
+
 static int	input_ok(int i, std::string input)
 {
 	size_t j;
@@ -15,6 +25,8 @@ static int	input_ok(int i, std::string input)
 		for (j = 0; j < input.length(); j++)
 			if (!isdigit(input[j]) && input[j] != ' ')
 				return (0);
+		if (input_only_spaces(input))
+			return (0);
 		return (1);
 	}
 	else
@@ -22,6 +34,8 @@ static int	input_ok(int i, std::string input)
 		for (j = 0; j < input.length(); j++)
 			if (!isalnum(input[j]) && input[j] != ' ')
 				return (0);
+		if (input_only_spaces(input))
+			return (0);
 		return (1);
 	}
 }
