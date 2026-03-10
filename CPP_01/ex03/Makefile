@@ -2,7 +2,7 @@ NAME = fight_club
 FLAGS = -Wall -Wextra -Werror -std=c++98 -g
 COMPILER = c++
 
-SRC_FILES = main.cpp Weapon.cpp HumanA.cpp #HumanB.cpp
+SRC_FILES = main.cpp Weapon.cpp HumanA.cpp HumanB.cpp
 
 O_DIR =  obj
 OFILES = $(SRC_FILES:%.cpp=$(O_DIR)/%.o)
