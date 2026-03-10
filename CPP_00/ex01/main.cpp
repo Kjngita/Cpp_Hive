@@ -1,10 +1,29 @@
 #include "Contact.hpp"
 #include "Phonebook.hpp"
+#include <csignal>
+#include <cstring>
+
+sig_atomic_t	g_running = 1;
+
+void signalHandler(int)
+{
+    g_running = 0;
+}
 
 int main()
 {
+	struct sigaction sig_act;
+	
+	std::memset(&sig_act, 0, sizeof(sig_act));
+	sig_act.sa_handler = signalHandler;
+
+	sigaction(SIGINT, &sig_act, NULL);
+	sigaction(SIGQUIT, &sig_act, NULL);
+	sigaction(SIGTERM, &sig_act, NULL);
+
 	PhoneBook	book;
-	while (1)
+	
+	while (g_running)
 	{
 		std::cout << "- - - - - - - -  - - - - - - - - -\n";
 		std::cout << "Enter command: ADD / SEARCH / EXIT\n";

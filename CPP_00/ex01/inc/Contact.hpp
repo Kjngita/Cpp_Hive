@@ -23,4 +23,6 @@ class Contact
 		std::string	_secret;
 };
 
+extern __sig_atomic_t	g_running;
+
 #endif

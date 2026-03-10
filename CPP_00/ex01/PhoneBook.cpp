@@ -52,7 +52,7 @@ void	PhoneBook::addContact()
 	{
 		std::cout << prompt[i];
 		std::getline(std::cin, input);
-		if (std::cin.eof())
+		if (!g_running || std::cin.eof())
 		{
 			std::cout << "[But wait we're not done]\n";
 			return ;
