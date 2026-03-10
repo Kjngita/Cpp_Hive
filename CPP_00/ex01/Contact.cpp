@@ -14,30 +14,18 @@ int	Contact::getIndex()
 	return(_index);
 }
 
-static std::string trim_spaces(std::string str)
-{
-	int i = 0;
-	while (str[i] && str[i] == ' ')
-		i++;
-	int j = str.length();
-	while (j > i && str[j - 1] == ' ')
-		j--;
-	std::string chopped = str.substr(i, j - i);
-	return (chopped);
-}
-
 void Contact::setParam(std::string str, int	param)
 {
 	if (param == 'F')
-		_firstname = trim_spaces(str);
+		_firstname = str;
 	else if (param == 'L')
-		_lastname = trim_spaces(str);
+		_lastname = str;
 	else if (param == 'N')
-		_nickname = trim_spaces(str);
+		_nickname = str;
 	else if (param == 'P')
-		_phonenum = trim_spaces(str);
+		_phonenum = str;
 	else if (param == 'S')
-		_secret = trim_spaces(str);
+		_secret = str;
 	else
 		return ;
 }
