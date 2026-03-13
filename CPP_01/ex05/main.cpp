@@ -3,10 +3,10 @@
 int main()
 {
 	Harl	dude;
-	dude.complain("debug");
-	dude.complain("info");
 	dude.complain("segfault");
-	dude.complain("warning");
+	dude.complain("DEBUG");
+	dude.complain("INFO");
+	dude.complain("WARNING");
 	dude.complain("error");
 	return 0;
 }
