@@ -40,23 +40,20 @@ void	Harl::complain(std::string level)
 	{
 		if (str[i] == level)
 		{
-			for (int j = 0; j <= i; j++)
+			switch (i)
 			{
-				switch (j)
-				{
-				case 0:
-					(this->*levelFunctions[j])();
-					break ;
-				case 1:
-					(this->*levelFunctions[j])();
-					break ;
-				case 2:
-					(this->*levelFunctions[j])();
-					break ;
-				case 3:
-					(this->*levelFunctions[j])();
-					break ;
-				}
+			case 0:
+				(this->*levelFunctions[0])();
+				__attribute__ ((fallthrough));
+			case 1:
+				(this->*levelFunctions[1])();
+				__attribute__ ((fallthrough));
+			case 2:
+				(this->*levelFunctions[2])();
+				__attribute__ ((fallthrough));
+			case 3:
+				(this->*levelFunctions[3])();
+				break ;
 			}
 			return ;
 		}
