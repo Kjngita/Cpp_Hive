@@ -1,0 +1,65 @@
+#include "Harl.hpp"
+
+Harl::Harl() {}
+
+Harl::~Harl() {}
+
+void	Harl::debug()
+{
+	std::cout << "[ DEBUG ]\n";
+	std::cout << "Harl cannot debug this\n\n";
+}
+
+void	Harl::info()
+{
+	std::cout << "[ INFO ]\n";
+	std::cout << "Harl does not understand this info\n\n";
+}
+
+void	Harl::warning()
+{
+	std::cout << "[ WARNING ]\n";
+	std::cout << "Harl hears no warning\n\n";
+}
+
+void	Harl::error()
+{
+	std::cout << "[ ERROR ]\n";
+	std::cout << "Harl drowns in errors\n\n";
+}
+
+void	Harl::complain(std::string level)
+{
+	std::string str[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+
+	void (Harl::*levelFunctions[])() = {
+		&Harl::debug, &Harl::info, &Harl::warning, &Harl::error
+	};
+	
+	for (int i = 0; i < 4; i++)
+	{
+		if (str[i] == level)
+		{
+			for (int j = 0; j <= i; j++)
+			{
+				switch (j)
+				{
+				case 0:
+					(this->*levelFunctions[j])();
+					break ;
+				case 1:
+					(this->*levelFunctions[j])();
+					break ;
+				case 2:
+					(this->*levelFunctions[j])();
+					break ;
+				case 3:
+					(this->*levelFunctions[j])();
+					break ;
+				}
+			}
+			return ;
+		}
+	}
+	std::cout << "[ More complaints from Harl about life in general... ]\n";
+}
