@@ -1,8 +1,8 @@
-NAME = Fixed
+NAME = 00
 FLAGS = -Wall -Wextra -Werror -std=c++98 -g
 COMPILER = c++
 
-SRC_FILES = main.cpp Harl.cpp
+SRC_FILES = main.cpp Fixed.cpp
 
 O_DIR =  obj
 OFILES = $(SRC_FILES:%.cpp=$(O_DIR)/%.o)
