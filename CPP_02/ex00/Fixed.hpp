@@ -5,7 +5,7 @@
 class Fixed
 {
 	private:
-		int	_inum;
+		int	_fixedPointNum;
 		static int const _bits;
 
 	public:
