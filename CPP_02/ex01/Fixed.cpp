@@ -23,12 +23,28 @@ Fixed& Fixed::operator=(const Fixed& src) {
 
 Fixed::Fixed(const int num) {
 	std::cout << "Int constructor called\n";
-	_fixedPointNum = num << _bits; //wronggggggggg
+	int min_int = -(1 << 23);
+	int	max_int = (1 << 23) - 1;
+	if (num < min_int || num > max_int)
+	{
+		std::cout << "Integer value out of range to convert to fixed point!\n";
+		setRawBits(0);
+		return ;
+	}
+	_fixedPointNum = num << _bits;
 }
 
 Fixed::Fixed(const float num) {
 	std::cout << "Float constructor called\n";
-	_fixedPointNum = (int)(roundf(num * (1 << _bits))); //wrongggggg
+	int min_int = -(1 << 23);
+	int	max_int = (1 << 23) - 1;
+	if (num < (float)min_int || num > (float)max_int)
+	{
+		std::cout << "Float value out of range to convert to fixed point!\n";
+		setRawBits(0);
+		return ;
+	}
+	_fixedPointNum = (int)(roundf(num * (1 << _bits)));
 }
 
 int const Fixed::_bits = 8;
@@ -46,10 +62,10 @@ int	Fixed::toInt(void) const {
 }
 
 float Fixed::toFloat(void) const {
-	return ((float)_fixedPointNum / (float)(1 << _bits));
+	return ((float)_fixedPointNum / (1 << _bits));
 }
 
 std::ostream& operator<<(std::ostream& output, const Fixed& f) {
-	output << f.getRawBits();
+	output << f.toFloat();
 	return output;
 }
