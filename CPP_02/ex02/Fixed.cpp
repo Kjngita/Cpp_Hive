@@ -17,9 +17,7 @@ Fixed& Fixed::operator=(const Fixed& src) {
 }
 
 Fixed::Fixed(const int num) {
-	int min_int = -(1 << 23);
-	int	max_int = (1 << 23) - 1;
-	if (num < min_int || num > max_int)
+	if (num < MIN_ALLOWED_INT || num > MAX_ALLOWED_INT)
 	{
 		std::cout << "Integer value out of range to convert to fixed point!\n";
 		setRawBits(0);
@@ -29,9 +27,7 @@ Fixed::Fixed(const int num) {
 }
 
 Fixed::Fixed(const float num) {
-	int min_int = -(1 << 23);
-	int	max_int = (1 << 23) - 1;
-	if (num < (float)min_int || num > (float)max_int)
+	if (num < (float)MIN_ALLOWED_INT || num > (float)MAX_ALLOWED_INT)
 	{
 		std::cout << "Float value out of range to convert to fixed point!\n";
 		setRawBits(0);
@@ -87,44 +83,56 @@ bool Fixed::operator!=(const Fixed& other) {
 	return (_fixedPointNum != other._fixedPointNum);
 }
 
-Fixed& Fixed::operator+(const Fixed& other) {
-	_fixedPointNum = _fixedPointNum + other._fixedPointNum;
-	return *this;
+/*
+For arithmatics operators, return a new value instead of modifying original object.
+*/
+
+Fixed Fixed::operator+(const Fixed& other) {
+	Fixed	res;
+	res._fixedPointNum = _fixedPointNum + other._fixedPointNum;
+	return res;
 }
 
-Fixed& Fixed::operator-(const Fixed& other) {
-	_fixedPointNum = _fixedPointNum - other._fixedPointNum;
-	return *this;
+Fixed Fixed::operator-(const Fixed& other) {
+	Fixed	res;
+	res._fixedPointNum = _fixedPointNum - other._fixedPointNum;
+	return res;
 }
 
-/* Multiply first to preserve fraction, then divide to rescale*/
-Fixed& Fixed::operator*(const Fixed& other) {
-	_fixedPointNum = (_fixedPointNum * other._fixedPointNum) >> _bits;
-	return *this;
+//Multiply first to preserve fraction, then divide to rescale
+Fixed Fixed::operator*(const Fixed& other) {
+	Fixed	res;
+	res._fixedPointNum = (_fixedPointNum * other._fixedPointNum) >> _bits;
+	return res;
 }
 
-/* Multiply by scale first to preserve fraction (<< _bits = * _bits), then divide*/
-Fixed& Fixed::operator/(const Fixed& other) {
-	_fixedPointNum = (_fixedPointNum << _bits) / other._fixedPointNum;
-	return *this;
+//Multiply by scale first to preserve fraction (<< _bits = * _bits), then divide
+Fixed Fixed::operator/(const Fixed& other) {
+	Fixed	res;
+	res._fixedPointNum = (_fixedPointNum << _bits) / other._fixedPointNum;
+	return res;
 }
 
+//Pre-increment
 Fixed& Fixed::operator++() {
 	_fixedPointNum++;
 	return (*this);
 }
 
+//Pre-decrement
 Fixed& Fixed::operator--() {
 	_fixedPointNum--;
 	return (*this);
 }
 
+//Post-increment
 Fixed Fixed::operator++(int) {
 	Fixed	temp = *this;
 	_fixedPointNum++;
 	return (temp);
 }
 
+//Post-decrement
 Fixed Fixed::operator--(int) {
 	Fixed	temp = *this;
 	_fixedPointNum--;

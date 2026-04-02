@@ -3,6 +3,9 @@
 #include <iostream>
 #include <cmath>
 
+#define	MAX_ALLOWED_INT (1 << 23) - 1
+#define MIN_ALLOWED_INT -(1 << 23)
+
 class Fixed
 {
 	private:
@@ -26,10 +29,10 @@ class Fixed
 		bool operator<=(const Fixed& other);
 		bool operator==(const Fixed& other);
 		bool operator!=(const Fixed& other);
-		Fixed&	operator+(const Fixed& other);
-		Fixed&	operator-(const Fixed& other);
-		Fixed&	operator*(const Fixed& other);
-		Fixed&	operator/(const Fixed& other);
+		Fixed	operator+(const Fixed& other);
+		Fixed	operator-(const Fixed& other);
+		Fixed	operator*(const Fixed& other);
+		Fixed	operator/(const Fixed& other);
 		Fixed&	operator++();
 		Fixed&	operator--();
 		Fixed	operator++(int);
