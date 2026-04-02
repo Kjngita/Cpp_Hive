@@ -30,6 +30,7 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+	rm *.replace
 	@echo "\033[33m~✧*｡⋆ Program deleted ⋆｡*✧~\033[0m"
 
 re: fclean all

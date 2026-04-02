@@ -1,7 +1,5 @@
 #include "Zombie.hpp"
 
-Zombie* newZombie(std::string name);
-
 int main()
 {
 	Zombie*	clones = zombieHorde(5, "Hodor");
