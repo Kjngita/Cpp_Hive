@@ -3,6 +3,9 @@
 #include <iostream>
 #include <cmath>
 
+#define	MAX_ALLOWED_INT (1 << 23) - 1
+#define MIN_ALLOWED_INT -(1 << 23)
+
 class Fixed
 {
 	private:

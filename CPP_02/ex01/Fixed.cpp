@@ -22,10 +22,7 @@ Fixed& Fixed::operator=(const Fixed& src) {
 }
 
 Fixed::Fixed(const int num) {
-	std::cout << "Int constructor called\n";
-	int min_int = -(1 << 23);
-	int	max_int = (1 << 23) - 1;
-	if (num < min_int || num > max_int)
+	if (num < MIN_ALLOWED_INT || num > MAX_ALLOWED_INT)
 	{
 		std::cout << "Integer value out of range to convert to fixed point!\n";
 		setRawBits(0);
@@ -35,10 +32,7 @@ Fixed::Fixed(const int num) {
 }
 
 Fixed::Fixed(const float num) {
-	std::cout << "Float constructor called\n";
-	int min_int = -(1 << 23);
-	int	max_int = (1 << 23) - 1;
-	if (num < (float)min_int || num > (float)max_int)
+	if (num < (float)MIN_ALLOWED_INT || num > (float)MAX_ALLOWED_INT)
 	{
 		std::cout << "Float value out of range to convert to fixed point!\n";
 		setRawBits(0);
