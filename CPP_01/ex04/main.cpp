@@ -22,6 +22,13 @@ int main(int ac, char **av)
 		std::cout << "Incorrect input. Please enter: <filename> str1 str2\n";
 		return 1;
 	}
+	std::string	argv2 = av[2];
+	std::string	argv3 = av[3];
+	if (argv2 == argv3)
+	{
+		std::cout << "Original string and replacement string cannot be identical\n";
+		return 1;
+	}
 	std::ifstream	source(av[1]);
 	if (source.is_open())
 	{
@@ -31,7 +38,7 @@ int main(int ac, char **av)
 		std::string text;
 		while (getline(source, text))
 		{
-			text = modify_text(text, av[2], av[3]);
+			text = modify_text(text, argv2, argv3);
 			output << text << std::endl;
 		}
 	}
