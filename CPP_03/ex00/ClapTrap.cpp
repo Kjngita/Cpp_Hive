@@ -9,13 +9,13 @@ ClapTrap::ClapTrap(std::string name) : _name(name), _hp(10), _ep(10), _atkDMG(0)
 	std::cout << _name << std::endl;
 }
 
-ClapTrap::~ClapTrap() {
-	std::cout << "Salute! ClapTrap " << _name << " was destroyed\n";
-}
-
 ClapTrap::ClapTrap(const ClapTrap& other) {
 	std::cout << "Copy constructor was ordered\n";
 	*this = other;
+}
+
+ClapTrap::~ClapTrap() {
+	std::cout << "Salute! ClapTrap " << _name << " was destroyed\n";
 }
 
 ClapTrap& ClapTrap::operator=(const ClapTrap& other) {
@@ -28,6 +28,10 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& other) {
 		_atkDMG = other._atkDMG;
 	}
 	return (*this);
+}
+
+void	ClapTrap::showStats() {
+	std::cout << _name << ": HP=" << _hp << " EP=" << _ep << " ATK=" << _atkDMG << std::endl;
 }
 
 void	ClapTrap::attack(const std::string& target) {
