@@ -30,10 +30,6 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& other) {
 	return (*this);
 }
 
-void	ClapTrap::showStats() {
-	std::cout << _name << ": HP=" << _hp << " EP=" << _ep << " ATK=" << _atkDMG << std::endl;
-}
-
 void	ClapTrap::attack(const std::string& target) {
 	if (_hp <= 0)
 	{
@@ -78,3 +74,7 @@ void	ClapTrap::beRepaired(unsigned int amount) {
 	std::cout << amount << " HP. Bring it on!\n";
 	_ep--;
 }
+
+// void	ClapTrap::showStats() {
+// 	std::cout << _name << ": HP=" << _hp << " EP=" << _ep << " ATK=" << _atkDMG << std::endl;
+// }
