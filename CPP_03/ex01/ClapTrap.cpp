@@ -15,7 +15,7 @@ ClapTrap::ClapTrap(const ClapTrap& other) {
 }
 
 ClapTrap::~ClapTrap() {
-	std::cout << "Salute! ClapTrap " << _name << " was destroyed\n";	
+	std::cout << "Salute! ClapTrap " << _name << " was destroyed\n";
 }
 
 ClapTrap& ClapTrap::operator=(const ClapTrap& other) {
@@ -30,51 +30,59 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& other) {
 	return (*this);
 }
 
-void	ClapTrap::showStats() {
-	std::cout << _name << ": HP=" << _hp << " EP=" << _ep << " ATK=" << _atkDMG << std::endl;
-}
-
 void	ClapTrap::attack(const std::string& target) {
-	if (_hp <= 0)
+	if (_hp == 0)
 	{
-		std::cout << _name << " is deader than dead to attack :(\n";
+		std::cout << "c.t. " << _name << " is deader than dead to attack :(\n";
 		return ;
 	}
 	if (_ep == 0)
 	{
-		std::cout << _name << " runs out of battery, cannot attack ";
+		std::cout << "c.t. " << _name << " runs out of battery, cannot attack ";
 		std::cout << target << " :(\n";
 		return ;
 	}
-	std::cout << "ClapTrap " << _name << " punches " << target;
+	std::cout << "c.t. " << _name << " punches " << target;
 	std::cout << " in the face! " << _atkDMG << " DMG dealt!\n";
 	_ep--;
 }
 
 void	ClapTrap::takeDamage(unsigned int amount) {
-	if (_hp <= 0)
+	if (_hp == 0)
 	{
-		std::cout << _name << " already dead, still received ";
+		std::cout << "c.t. " << _name << " already dead, still received ";
 		std::cout << amount << " DMG >_<\n";
 		return ;
 	}
-	std::cout << "ClapTrap " << _name << " got hit for " << amount;
+	std::cout << "c.t. " << _name << " got hit for " << amount;
 	std::cout << " DMG, ouch!\n";
 	_hp = _hp - amount;
+	if (_hp < 0)
+		_hp = 0;
 }
 
 void	ClapTrap::beRepaired(unsigned int amount) {
-	if (_hp <= 0)
+	if (_hp == 0)
 	{
-		std::cout << _name << " is deader than dead to repair :(\n";
+		std::cout << "c.t. " << _name << " is deader than dead to repair :(\n";
 		return ;
 	}
 	if (_ep == 0)
 	{
-		std::cout << _name << " runs out of battery, cannot repair :(\n";
+		std::cout << "c.t. " << _name << " runs out of battery, cannot repair :(\n";
 		return ;
 	}
-	std::cout << "ClapTrap " << _name << " repaired itself for ";
+	std::cout << "c.t. " << _name << " repaired itself for ";
 	std::cout << amount << " HP. Bring it on!\n";
+	_hp = _hp + amount;
 	_ep--;
 }
+
+// void	ClapTrap::setName(std::string newName) {
+// 	std::cout << "** This " << _name << " will now identify as " << newName << " **\n";
+// 	_name = newName;
+// }
+
+// void	ClapTrap::showStats() {
+// 	std::cout << "// [" << _name << "]: HP=" << _hp << " EP=" << _ep << " ATK=" << _atkDMG << " //\n";
+// }
