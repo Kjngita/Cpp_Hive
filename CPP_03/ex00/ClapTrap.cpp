@@ -56,6 +56,8 @@ void	ClapTrap::takeDamage(unsigned int amount) {
 	}
 	std::cout << "ClapTrap " << _name << " got hit for " << amount;
 	std::cout << " DMG, ouch!\n";
+	if (amount > 2147483647)
+		amount = 2147483647;
 	_hp = _hp - amount;
 	if (_hp < 0)
 		_hp = 0;
@@ -72,6 +74,8 @@ void	ClapTrap::beRepaired(unsigned int amount) {
 		std::cout << _name << " runs out of battery, cannot repair :(\n";
 		return ;
 	}
+	if (amount > 2147483647 || _hp + amount > 2147483647)
+		amount = 2147483647 - _hp;
 	std::cout << "ClapTrap " << _name << " repaired itself for ";
 	std::cout << amount << " HP. Bring it on!\n";
 	_hp = _hp + amount;

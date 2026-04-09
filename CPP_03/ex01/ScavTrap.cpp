@@ -35,16 +35,16 @@ ScavTrap& ScavTrap::operator=(const ScavTrap& other) {
 void	ScavTrap::attack(const std::string& target) {
 	if (_hp == 0)
 	{
-		std::cout << "s.t. " << _name << " is way too dead to attack :(\n";
+		std::cout << "_scav " << _name << " is way too dead to attack :(\n";
 		return ;
 	}
 	if (_ep == 0)
 	{
-		std::cout << "s.t. " << _name << " is way too tired to attack "
+		std::cout << "_scav " << _name << " is way too tired to attack "
 				<< target << " :(\n";
 		return ;
 	}
-	std::cout << "s.t. " << _name << " dealt " << _atkDMG
+	std::cout << "_scav " << _name << " dealt " << _atkDMG
 			<< " DMG to " << target  << "!\n";
 	_ep--;
 }
@@ -52,8 +52,8 @@ void	ScavTrap::attack(const std::string& target) {
 void	ScavTrap::guardGate() {
 	if (_hp == 0)
 	{
-		std::cout << "Pls revive " << _name << " to guard gate T_T\n";
+		std::cout << "Pls revive ScavTrap " << _name << " to guard gate T_T\n";
 		return ;
 	}
-	std::cout << "s.t. " << _name << " entered Gate Keeper mode!\n";
+	std::cout << "_scav " << _name << " entered Gate Keeper mode!\n";
 }

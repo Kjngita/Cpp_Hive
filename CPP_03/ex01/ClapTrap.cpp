@@ -33,29 +33,31 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& other) {
 void	ClapTrap::attack(const std::string& target) {
 	if (_hp == 0)
 	{
-		std::cout << "c.t. " << _name << " is deader than dead to attack :(\n";
+		std::cout << "_clap " << _name << " is deader than dead to attack :(\n";
 		return ;
 	}
 	if (_ep == 0)
 	{
-		std::cout << "c.t. " << _name << " runs out of battery, cannot attack ";
-		std::cout << target << " :(\n";
+		std::cout << "_clap " << _name << " runs out of battery, cannot attack "
+				<< target << " :(\n";
 		return ;
 	}
-	std::cout << "c.t. " << _name << " punches " << target;
-	std::cout << " in the face! " << _atkDMG << " DMG dealt!\n";
+	std::cout << "_clap " << _name << " punches " << target
+			<< " in the face! " << _atkDMG << " DMG dealt!\n";
 	_ep--;
 }
 
 void	ClapTrap::takeDamage(unsigned int amount) {
 	if (_hp == 0)
 	{
-		std::cout << "c.t. " << _name << " already dead, still received ";
-		std::cout << amount << " DMG >_<\n";
+		std::cout << "_clap " << _name << " already dead, still received "
+				<< amount << " DMG >_<\n";
 		return ;
 	}
-	std::cout << "c.t. " << _name << " got hit for " << amount;
-	std::cout << " DMG, ouch!\n";
+	std::cout << "_clap " << _name << " got hit for " << amount
+			<< " DMG, ouch!\n";
+	if (amount > 2147483647)
+		amount = 2147483647;
 	_hp = _hp - amount;
 	if (_hp < 0)
 		_hp = 0;
@@ -64,16 +66,18 @@ void	ClapTrap::takeDamage(unsigned int amount) {
 void	ClapTrap::beRepaired(unsigned int amount) {
 	if (_hp == 0)
 	{
-		std::cout << "c.t. " << _name << " is deader than dead to repair :(\n";
+		std::cout << "_clap " << _name << " is deader than dead to repair :(\n";
 		return ;
 	}
 	if (_ep == 0)
 	{
-		std::cout << "c.t. " << _name << " runs out of battery, cannot repair :(\n";
+		std::cout << "_clap " << _name << " runs out of battery, cannot repair :(\n";
 		return ;
 	}
-	std::cout << "c.t. " << _name << " repaired itself for ";
-	std::cout << amount << " HP. Bring it on!\n";
+	if (amount > 2147483647 || _hp + amount > 2147483647)
+		amount = 2147483647 - _hp;
+	std::cout << "_clap " << _name << " repaired itself for "
+			<< amount << " HP. Bring it on!\n";
 	_hp = _hp + amount;
 	_ep--;
 }
