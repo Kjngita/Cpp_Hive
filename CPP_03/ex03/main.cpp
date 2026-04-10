@@ -9,7 +9,7 @@ int main()
 	std::cout << std::endl;
 
 	bling.showStats();
-	bling.attack("jewellry thief");
+	bling.attack("jewel thief");
 	bling.guardGate();
 	bling.highFiveGuys();
 

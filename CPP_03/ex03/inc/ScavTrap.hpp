@@ -5,9 +5,9 @@
 class ScavTrap : virtual public ClapTrap
 {
 	private:
-		static const int	_hpScav;
-		static const int	_epScav;
-		static const int	_atkScav;
+		static const int	_hpScav = 100;
+		static const int	_epScav = 50;
+		static const int	_atkScav = 20;
 	
 	public:
 		ScavTrap();

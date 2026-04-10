@@ -55,11 +55,7 @@ void	ScavTrap::guardGate() {
 		std::cout << "Pls revive ScavTrap " << _name << " to guard gate T_T\n";
 		return ;
 	}
-	std::cout << "ScavTrap " << _name << " entered Gate Keeper mode!\n";
+	std::cout << "ScavTrap " << _name << " entered Gate Keeper mode +_+\n";
 }
-
-const int ScavTrap::_hpScav = 100;
-const int ScavTrap::_epScav = 50;
-const int ScavTrap::_atkScav = 20;
 
 int	ScavTrap::getEPScav() { return _epScav; }

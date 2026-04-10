@@ -5,9 +5,9 @@ FragTrap::FragTrap() : ClapTrap() {
 }
 
 FragTrap::FragTrap(std::string name) : ClapTrap(name) {
-	_hp = 100;
-	_ep = 100;
-	_atkDMG = 30;
+	_hp = _hpFrag;
+	_ep = _epFrag;
+	_atkDMG = _atkFrag;
 	std::cout << "FragTrap named " << _name << " is ready for action\n";
 }
 
@@ -42,3 +42,7 @@ void	FragTrap::highFiveGuys(void) {
 	std::cout << "FragTrap " << _name 
 			<< " said: Hit me baby one more time, my palm up here :3\n";
 }
+
+int	FragTrap::getHPFrag() { return _hpFrag; }
+
+int	FragTrap::getATKFrag() { return _atkFrag; }

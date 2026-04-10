@@ -7,7 +7,9 @@ DiamondTrap::DiamondTrap() : ScavTrap(), FragTrap() {
 DiamondTrap::DiamondTrap(std::string name) : ScavTrap(name), FragTrap(name) {
 	_name = name;
 	ClapTrap::_name = name + "_clap_name";
+	_hp = FragTrap::getHPFrag(); //no need since construction alr assign
 	_ep = ScavTrap::getEPScav();
+	_atkDMG = FragTrap::getATKFrag(); //no need since construction alr assign
 	std::cout << "DiamondTrap " << _name << " is hereee\n";
 }
 
@@ -34,6 +36,6 @@ DiamondTrap&	DiamondTrap::operator=(const DiamondTrap& other) {
 }
 
 void	DiamondTrap::whoAmI() {
-	std::cout << "DiamondTrap's name is " << _name << " and also answers to "
-			<< ClapTrap::_name << std::endl;
+	std::cout << "This DiamondTrap answers to " << _name 
+			<< " and also answers to " << ClapTrap::_name << std::endl;
 }
