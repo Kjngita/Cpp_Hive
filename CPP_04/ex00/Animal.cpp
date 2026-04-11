@@ -1,7 +1,7 @@
 #include "Animal.hpp"
 
 Animal::Animal() {
-	type = "Alien";
+	type = "Mammal";
 	std::cout << "Animal born\n";
 }
 
@@ -11,7 +11,7 @@ Animal::Animal(const Animal& other) {
 }
 
 Animal::~Animal() {
-	std::cout << "Animal slaughtered\n";
+	std::cout << "Animal died\n";
 }
 
 Animal& Animal::operator=(const Animal& other) {
@@ -26,5 +26,5 @@ Animal& Animal::operator=(const Animal& other) {
 std::string	Animal::getType() const { return type; }
 
 void	Animal::makeSound() const {
-	std::cout << "[alien language] &^$&%#^$*%)\n";
+	std::cout << "Mammal generic sound\n";
 }

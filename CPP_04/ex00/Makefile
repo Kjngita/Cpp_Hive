@@ -2,7 +2,8 @@ NAME = zoo
 FLAGS = -Wall -Wextra -Werror -std=c++98 -g
 COMPILER = c++
 
-SRC_FILES = main.cpp Animal.cpp Cat.cpp Dog.cpp
+SRC_FILES = main.cpp Animal.cpp Cat.cpp Dog.cpp \
+			WrongAnimal.cpp WrongCat.cpp
 
 O_DIR =  obj
 OFILES = $(SRC_FILES:%.cpp=$(O_DIR)/%.o)
