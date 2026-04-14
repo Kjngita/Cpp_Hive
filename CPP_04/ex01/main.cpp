@@ -3,7 +3,7 @@
 
 int main()
 {
-	int	quantity = 10;
+	int	quantity = 5;
 	Animal* array[quantity];
 	int	num = 1;
 	for (int i = 0; i < quantity; i++)
@@ -12,16 +12,11 @@ int main()
 		if (i % 2 == 0)
 		{
 			array[i] = new Dog();
-			// array[i]->makeSound();
 		}
 		else
 		{
 			array[i] = new Cat();
-			// array[i]->makeSound();
-			if (i == 5)
-				array[i]->setThoughts();
 		}
-		std::cout << std::endl;
 		num++;
 	}
 	num = 1;
@@ -29,16 +24,34 @@ int main()
 	{
 		std::cout << num << ". ";
 		array[i]->makeSound();
-		std::cout << array[i]->getThoughts() << std::endl;
 		num++;
 	}
-	std::cout << "DEEP COPY?\n";
-	Animal test(*array[5]);
-	std::cout << "Original thought: " << array[5]->getThoughts();
-	std::cout << "Copy thought: " << test.getThoughts();
-	std::cout << std::endl;
-
 	for (int i = 0; i < quantity; i++)
 		delete array[i];
+	std::cout << std::endl;
+
+
+	std::cout << "= = = = = DEEP COPY? = = = = =\n";
+	/*Copy constructor*/
+	Dog* pup = new Dog();
+	Dog dawg(*pup);
+	dawg.setThoughts("Gimme toys", 0);
+	std::cout << "Pup: " << pup->getThoughts(0) << std::endl;
+	std::cout << "Dawg: " << dawg.getThoughts(0) << std::endl;
+	delete pup;
+	std::cout << std::endl;
+
+	/*Copy assignment*/
+	Cat c;
+	c.setThoughts("Brilliant idea", 0);
+	c.setThoughts("auth", 1);
+	Cat d;
+	d = c;
+	d.setThoughts("dupe", 1);
+	std::cout << "Orig " << c.getType() << ": " << c.getThoughts(0)
+			<< " | " << c.getThoughts(1) << std::endl;
+	std::cout << "Copy " << d.getType() << ": " << d.getThoughts(0)
+			<< " | " << d.getThoughts(1) << std::endl;
+	
 	return 0;
 }

@@ -15,6 +15,6 @@ class Cat : public Animal
 		Cat& operator=(const Cat& other);
 
 		virtual void	makeSound() const;
-		std::string		getThoughts() const;
-		void			setThoughts();
+		void			setThoughts(std::string text, int index);
+		std::string		getThoughts(int index) const;
 };

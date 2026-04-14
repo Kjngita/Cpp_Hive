@@ -2,7 +2,6 @@
 
 Brain::Brain() {
 	std::cout << "Brain - default construction\n";
-	// _ideas[0] = "Brilliant idea\n";
 }
 
 Brain::Brain(const Brain& other) {
@@ -30,8 +29,8 @@ void	Brain::setIdea(std::string text, int index) {
 	_ideas[index] = text;
 }
 
-std::string	Brain::getIdea(int index) {
+std::string	Brain::getIdea(int index) const {
 	if (index < 0 || index > 99)
-		return ("Not within idea range\n");
+		return ("[ Not within idea range ]\n");
 	return (_ideas[index]);
 }

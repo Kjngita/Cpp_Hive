@@ -28,11 +28,3 @@ std::string	Animal::getType() const { return type; }
 void	Animal::makeSound() const {
 	std::cout << "Mammal generic sound\n";
 }
-
-void	Animal::setThoughts() {
-	std::cout << "test\n";
-}
-
-std::string	Animal::getThoughts() const {
-	return "test2\n";
-}

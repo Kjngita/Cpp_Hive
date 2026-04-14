@@ -6,8 +6,8 @@ Cat::Cat() : Animal() {
 	std::cout << "Cat adopted\n";
 }
 
-Cat::Cat(const Cat& other) {
-	*this = other;
+Cat::Cat(const Cat& other) : Animal(other) {
+	_thoughtsCat = new Brain(*other._thoughtsCat);
 	std::cout << "Copy constructor for Cat\n";
 }
 
@@ -19,6 +19,10 @@ Cat::~Cat() {
 Cat& Cat::operator=(const Cat& other) {
 	if (this != &other)
 	{
+		Animal::operator=(other);
+		Brain* tmp = new Brain(*other._thoughtsCat);
+		delete _thoughtsCat;
+		_thoughtsCat = tmp;
 		type = other.type;
 	}
 	std::cout << "Copy assignment for Cat\n";
@@ -29,10 +33,14 @@ void	Cat::makeSound() const {
 	std::cout << "Meowww~\n";
 }
 
-void	Cat::setThoughts() {
-	_thoughtsCat->setIdea("Whatever\n", 0);
+void	Cat::setThoughts(std::string text, int index) {
+	if (index < 0 || index > 99)
+		return ;
+	_thoughtsCat->setIdea(text, index);
 }
 
-std::string Cat::getThoughts() const {
-	return _thoughtsCat->getIdea(0);
+std::string Cat::getThoughts(int index) const {
+	if (index < 0 || index > 99)
+		return ("[ Not within idea range ]\n");
+	return _thoughtsCat->getIdea(index);
 }
