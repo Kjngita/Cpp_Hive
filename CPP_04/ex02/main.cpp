@@ -53,8 +53,12 @@ int main()
 	std::cout << "Copy " << d.getType() << ": " << d.getThoughts(0)
 			<< " | " << d.getThoughts(1) << std::endl;
 	std::cout << std::endl;
-	
+
+
+	// std::cout << "= = = = = ABSTRACT? = = = = =\n";
 	// Animal	art;
+	// std::cout << art.getType() << std::endl;
+	// std::cout << std::endl;
 
 	return 0;
 }
