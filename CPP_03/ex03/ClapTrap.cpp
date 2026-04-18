@@ -74,7 +74,7 @@ void	ClapTrap::beRepaired(unsigned int amount) {
 		std::cout << "_clap " << _name << " runs out of battery, cannot repair :(\n";
 		return ;
 	}
-	if (amount > 2147483647 || _hp + amount > 2147483647)
+	if (amount + _hp > 2147483647)
 		amount = 2147483647 - _hp;
 	std::cout << "_clap " << _name << " repaired itself for "
 			<< amount << " HP. Bring it on!\n";
@@ -88,5 +88,5 @@ void	ClapTrap::setName(std::string newName) {
 }
 
 void	ClapTrap::showStats() {
-	std::cout << "// [" << _name << "]: HP=" << _hp << " EP=" << _ep << " ATK=" << _atkDMG << " //\n";
+	std::cout << "\t[" << _name << "]: HP=" << _hp << " EP=" << _ep << " ATK=" << _atkDMG << "\n";
 }
