@@ -7,9 +7,9 @@ DiamondTrap::DiamondTrap() : ScavTrap(), FragTrap() {
 DiamondTrap::DiamondTrap(std::string name) : ScavTrap(name), FragTrap(name) {
 	_name = name;
 	ClapTrap::_name = name + "_clap_name";
-	_hp = FragTrap::getHPFrag(); //no need since construction alr assign
-	_ep = ScavTrap::getEPScav();
-	_atkDMG = FragTrap::getATKFrag(); //no need since construction alr assign
+	_hp = FragTrap::_hpFrag; //no need since construction alr assign
+	_ep = ScavTrap::_epScav;
+	_atkDMG = FragTrap::_atkFrag; //no need since construction alr assign
 	std::cout << "DiamondTrap " << _name << " is hereee\n";
 }
 

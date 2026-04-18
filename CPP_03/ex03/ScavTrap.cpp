@@ -57,5 +57,3 @@ void	ScavTrap::guardGate() {
 	}
 	std::cout << "ScavTrap " << _name << " entered Gate Keeper mode +_+\n";
 }
-
-int	ScavTrap::getEPScav() { return _epScav; }

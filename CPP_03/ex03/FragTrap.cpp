@@ -42,7 +42,3 @@ void	FragTrap::highFiveGuys(void) {
 	std::cout << "FragTrap " << _name 
 			<< " said: Hit me baby one more time, my palm up here :3\n";
 }
-
-int	FragTrap::getHPFrag() { return _hpFrag; }
-
-int	FragTrap::getATKFrag() { return _atkFrag; }
