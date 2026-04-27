@@ -1,8 +1,7 @@
 #include "Bureaucrat.hpp"
 
 Bureaucrat::Bureaucrat() : _name("Nobody"), _grade(150) {
-	std::cout << "Default Bureaucrat: " << _name << " - "
-			<< _grade << std::endl;
+	std::cout << "Default Bureaucrat hired\n";
 }
 
 Bureaucrat::Bureaucrat(std::string name, unsigned int grade)
@@ -11,14 +10,12 @@ Bureaucrat::Bureaucrat(std::string name, unsigned int grade)
 		throw Bureaucrat::GradeTooHighException();
 	if (_grade > 150)
 		throw Bureaucrat::GradeTooLowException();
-	std::cout << "Bureaucrat enlisted: " << _name << " - "
-			<< _grade << std::endl;
+	std::cout << "Bureaucrat properly hired\n";
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat& other) :
 	_name(other._name), _grade(other._grade) {
-	std::cout << "Bureaucrat copied: " << _name << " - "
-			<< _grade << std::endl;
+	std::cout << "Bureaucrat copied\n";
 }
 
 Bureaucrat::~Bureaucrat() {

@@ -13,7 +13,7 @@ int main()
 		std::cout << guy << std::endl;
 		std::cout << bro << std::endl;
 	}
-	std::cout << "- - - - - - - - - - - - - - - -\n";
+	std::cout << "\n- - - - - - - - - - - - - - - -\n";
 	
 	std::cout << "\t=== Creating one with grade too high ===\n";
 	{
@@ -24,7 +24,7 @@ int main()
 		}
 		catch(std::exception& e)
 		{
-			std::cerr << e.what() << '\n';
+			std::cerr << e.what() << std::endl;
 		}
 	}
 	std::cout << "- - - - - - - - - - - - - - - -\n";
@@ -38,7 +38,7 @@ int main()
 		}
 		catch(std::exception& e)
 		{
-			std::cerr << e.what() << '\n';
+			std::cerr << e.what() << std::endl;
 		}
 	}
 	std::cout << "- - - - - - - - - - - - - - - -\n";
@@ -47,8 +47,8 @@ int main()
 	{
 		try
 		{
-			Bureaucrat	p1("Bill", 15);
-			Bureaucrat	p2("Bob", 1);
+			Bureaucrat	p1("Bam", 15);
+			Bureaucrat	p2("Boo", 1);
 
 			std::cout << p1 << std::endl;
 			std::cout << p2 << std::endl;
