@@ -27,10 +27,10 @@ Form::~Form() {
 
 const std::string	Form::getName() const { return _name; }
 
-std::string	Form::getStatus() const {
+bool	Form::getStatus() const {
 	if (_signed)
-		return "Signed";
-	return "Empty";
+		return true;
+	return false;
 }
 
 int	Form::getGrade2Sign() const { return _grade2sign; }
@@ -38,8 +38,12 @@ int	Form::getGrade2Sign() const { return _grade2sign; }
 int	Form::getGrade2Exe() const { return _grade2exe; }
 
 std::ostream& operator<<(std::ostream& out, const Form& target) {
+	std::string	stat = "Empty";
+	if (target.getStatus())
+		stat = "Signed";
+
 	out << "Form name:\t" << target.getName()
-		<< "\nStatus:\t\t" << target.getStatus()
+		<< "\nStatus:\t\t" << stat
 		<< "\nSign grade:\t" << target.getGrade2Sign()
 		<< "\nExecute grade:\t" << target.getGrade2Exe()
 		<< std::endl;

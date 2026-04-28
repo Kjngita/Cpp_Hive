@@ -33,7 +33,7 @@ class Form
 		};
 
 		const std::string	getName() const;
-		std::string			getStatus() const;
+		bool				getStatus() const;
 		int					getGrade2Sign() const;
 		int					getGrade2Exe() const;
 
