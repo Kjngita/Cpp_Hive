@@ -33,7 +33,6 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
-	rm *shrubbery
 	@echo "\033[33m~✧*｡⋆ Program deleted ⋆｡*✧~\033[0m"
 
 re: fclean all
