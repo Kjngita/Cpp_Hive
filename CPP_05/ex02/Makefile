@@ -4,7 +4,8 @@ COMPILER = c++
 
 SRC_FILES = main.cpp Bureaucrat.cpp AForm.cpp \
 			ShrubberyCreationForm.cpp \
-			RobotomyRequestForm.cpp
+			RobotomyRequestForm.cpp \
+			PresidentialPardonForm.cpp
 
 O_DIR =  obj
 OFILES = $(SRC_FILES:%.cpp=$(O_DIR)/%.o)
