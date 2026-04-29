@@ -59,8 +59,14 @@ void	AForm::beSigned(const Bureaucrat& guy) {
 
 bool	AForm::canExecute(const Bureaucrat& man) const {
 	if (!getStatus())
+	{
 		throw AForm::FormUnsigned();
+		return false;
+	}
 	if (man.getGrade() > static_cast<unsigned int>(_grade2exe))
+	{
 		throw AForm::GradeTooLowException();
+		return false;
+	}	
 	return true;
 }
