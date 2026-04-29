@@ -15,7 +15,7 @@ class AForm
 		AForm(std::string name, int signGrade, int exeGrade);
 		AForm(const AForm& other);
 		virtual ~AForm();
-		Form& operator=(const AForm& other) = delete;
+		AForm& operator=(const AForm& other) = delete;
 		
 		class GradeTooHighException : public std::exception
 		{
@@ -31,6 +31,13 @@ class AForm
 					return ("[ Grade too low! ]\n");
 				}
 		};
+		class FormUnsigned : public std::exception
+		{
+			public:
+				const char* what() const noexcept override {
+					return ("[ Form is unsigned! ]\n");
+				}
+		};
 
 		const std::string	getName() const;
 		bool				getStatus() const;
@@ -38,7 +45,7 @@ class AForm
 		int					getGrade2Exe() const;
 
 		void				beSigned(const Bureaucrat& guy);
-		int					canExecute(const Bureaucrat& man);
+		bool				canExecute(const Bureaucrat& man) const;
 		virtual void 		execute(Bureaucrat const & executor) const = 0;
 };
 

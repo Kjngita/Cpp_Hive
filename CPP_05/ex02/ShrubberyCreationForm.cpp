@@ -11,24 +11,22 @@ ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& other)
 
 ShrubberyCreationForm::~ShrubberyCreationForm() {}
 
-void	ShrubberyCreationForm::execute(Bureaucrat const & executor) const {
-	// if (canExecute(executor) == 1)
-
-	std::ofstream	outfile(_target + "_shrubbery");
-	plantTrees(outfile);
-}
-
-
-
 void	plantTrees(std::ofstream& file) {
-file << "	               \_/\n";
-file << "                --(_)--\n";
-file << "            .'.   / \\\n";
-file << "           / . \\\n";
-file << "          |  |. | ,-'-.\n";
-file << "     ,-'-.\ \|  /(  .  )\n";
-file << "    /  .  \  |, (  \|   )\n";
-file << "   |  .|/  |_|_(    |/   )\n";
-file << "    \._|,_/  |  '--.|..-'\n";
-file << " ______|_____|______|______\n";
+	file << "	              \\_/\n";
+	file << "                --(_)--\n";
+	file << "            .'.   / \\\n";
+	file << "           / . \\\n";
+	file << "          |  |. | ,-'-.\n";
+	file << "     ,-'-.\\ \\|  /(  .  )\n";
+	file << "    /  .  \\  |, (  \\|   )\n";
+	file << "   |  .|/  |_|_(    |/   )\n";
+	file << "    \\._|,_/  |  '--.|..-'\n";
+	file << " ______|_____|______|______\n";
+}
+void	ShrubberyCreationForm::execute(Bureaucrat const & executor) const {
+	if (canExecute(executor))
+	{
+		std::ofstream	outfile(_target + "_shrubbery");
+		plantTrees(outfile);
+	}
 }

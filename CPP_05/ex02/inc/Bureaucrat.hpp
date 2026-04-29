@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-class Form;
+class AForm;
 
 class	Bureaucrat
 {
@@ -35,8 +35,8 @@ class	Bureaucrat
 		unsigned int	getGrade() const;
 		void			upGrade();
 		void			downGrade();
-		void			signForm(Form& doc);
-		virtual void	execute(Bureaucrat const & executor) const;
+		void			signForm(AForm& doc);
+		void			executeForm(AForm const & form) const;
 };
 
 std::ostream&	operator<<(std::ostream& output, const Bureaucrat& target);

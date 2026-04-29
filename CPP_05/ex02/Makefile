@@ -2,7 +2,8 @@ NAME = multidocs
 FLAGS = -Wall -Wextra -Werror -std=c++11
 COMPILER = c++
 
-SRC_FILES = main.cpp Bureaucrat.cpp Form.cpp
+SRC_FILES = main.cpp Bureaucrat.cpp AForm.cpp \
+			ShrubberyCreationForm.cpp
 
 O_DIR =  obj
 OFILES = $(SRC_FILES:%.cpp=$(O_DIR)/%.o)
@@ -30,6 +31,7 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+	rm *shrubbery
 	@echo "\033[33m~✧*｡⋆ Program deleted ⋆｡*✧~\033[0m"
 
 re: fclean all

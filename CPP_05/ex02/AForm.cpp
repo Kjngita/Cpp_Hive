@@ -29,8 +29,8 @@ const std::string	AForm::getName() const { return _name; }
 
 bool	AForm::getStatus() const {
 	if (_signed)
-		return "Signed";
-	return "Empty";
+		return true;
+	return false;
 }
 
 int	AForm::getGrade2Sign() const { return _grade2sign; }
@@ -57,12 +57,10 @@ void	AForm::beSigned(const Bureaucrat& guy) {
 		_signed = true;
 }
 
-int	AForm::canExecute(const Bureaucrat& man) {
-	int	ret = 0;
+bool	AForm::canExecute(const Bureaucrat& man) const {
 	if (!getStatus())
-		beSigned(man);
+		throw AForm::FormUnsigned();
 	if (man.getGrade() > static_cast<unsigned int>(_grade2exe))
 		throw AForm::GradeTooLowException();
-	ret = 1;
-	return ret;
+	return true;
 }
