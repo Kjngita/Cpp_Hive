@@ -3,7 +3,8 @@ FLAGS = -Wall -Wextra -Werror -std=c++11
 COMPILER = c++
 
 SRC_FILES = main.cpp Bureaucrat.cpp AForm.cpp \
-			ShrubberyCreationForm.cpp
+			ShrubberyCreationForm.cpp \
+			RobotomyRequestForm.cpp
 
 O_DIR =  obj
 OFILES = $(SRC_FILES:%.cpp=$(O_DIR)/%.o)

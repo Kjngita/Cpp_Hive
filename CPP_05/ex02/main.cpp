@@ -1,48 +1,55 @@
 #include "Bureaucrat.hpp"
 #include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
 
 int main()
 {
 	std::cout << "\t=== Trees ===\n";
+	try
 	{
 		ShrubberyCreationForm	planting("mountain");
 		Bureaucrat				b("Bonnie", 145);
 
-		std::cout << planting;
 		std::cout << b << std::endl;
+		std::cout << planting << std::endl;
 		b.executeForm(planting);
 		b.signForm(planting);
 		b.executeForm(planting);
-		
+		std::cout << std::endl;
 		Bureaucrat				big("Boss", 10);
 		big.executeForm(planting);
+		std::cout << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
 	}
 	std::cout << "- - - - - - - - - - - - - - - -\n";
 	
-	// std::cout << "\t=== Creating forms with grades too high ===\n";
-	// {
-	// 	try
-	// 	{
-	// 		std::cout << "Params: \"SignHigh\", 0, 50\n";
-	// 		Form	paper("SignHigh", 0, 50);
-	// 		std::cout << paper << std::endl;
-	// 	}
-	// 	catch(std::exception& e)
-	// 	{
-	// 		std::cerr << e.what() << std::endl;
-	// 	}
-	// 	try
-	// 	{
-	// 		std::cout << "Params: \"ExeHigh\", 60, -3\n";
-	// 		Form	paper("ExeHigh", 60, -3);
-	// 		std::cout << paper << std::endl;
-	// 	}
-	// 	catch(std::exception& e)
-	// 	{
-	// 		std::cerr << e.what() << std::endl;
-	// 	}
-	// }
-	// std::cout << "- - - - - - - - - - - - - - - -\n";
+	
+	std::cout << "\t=== Bots ===\n";
+	{
+		try
+		{
+			RobotomyRequestForm		robo("Cyborg");
+			Bureaucrat				b("Bane", 70);
+
+			std::cout << b << std::endl;
+			std::cout << robo << std::endl;
+			b.executeForm(robo);
+			b.signForm(robo);
+			b.executeForm(robo);
+			std::cout << std::endl;
+			Bureaucrat				big("Boss", 10);
+			big.executeForm(robo);
+			std::cout << std::endl;
+		}
+		catch(std::exception& e)
+		{
+			std::cerr << e.what() << std::endl;
+		}
+	}
+	std::cout << "- - - - - - - - - - - - - - - -\n";
 	
 	// std::cout << "\t=== Creating forms with grades too low ===\n";
 	// {

@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-class AForm;
+class	AForm;
 
 class	Bureaucrat
 {
