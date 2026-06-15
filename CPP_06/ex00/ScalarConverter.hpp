@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <cmath>
-// #include <stdlib.h>
+#include <climits>
 
 class ScalarConverter
 {

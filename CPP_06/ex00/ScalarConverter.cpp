@@ -1,52 +1,88 @@
 #include "ScalarConverter.hpp"
 
-static void	toChar(double trueValue) {
-	std::cout << "Char: ";
-	if (std::isnan(trueValue) || std::isinf(trueValue)
-		|| trueValue < 0 || trueValue > 127)
+static bool	convertStr2Double(const std::string& input, double* value) {
+	size_t	i;
+	*value = std::stod(input, &i);
+
+	if (i != input.length()) //not a pure double value
+	{
+		if (input.at(i) == 'f' || input.at(i) == 'F')
+			i++;
+		while (i < input.length() && std::isspace(input[i]))
+			i++;
+		if (i != input.length())
+			return false;
+	}
+	return true;
+}
+
+static void	toChar(double trueVal) {
+	std::cout << "char: ";
+	if (std::isnan(trueVal) || std::isinf(trueVal)
+		|| trueVal < 0 || trueVal > 127)
 	{
 		std::cout << "Impossible\n";
 		return;
 	}
-	char c = static_cast<char>(trueValue);
+	char c = static_cast<char>(trueVal);
 	if (std::isprint(c))
 		std::cout << "'" << c << "'" << std::endl;
 	else
 		std::cout << "Non displayable\n";
 }
 
+static void	toInt(double trueVal) {
+	std::cout << "int: ";
+	if (std::isnan(trueVal) || std::isinf(trueVal)
+		|| trueVal < INT_MIN || trueVal > INT_MAX)
+	{
+		std::cout << "Impossible\n";
+		return;
+	}
+	int	i = static_cast<int>(trueVal);
+	std::cout << i << std::endl;
+}
+
+// static void	toFloat(double trueVal) {
+
+// }
+
 void	ScalarConverter::convert(const std::string& input) {
 	bool	convertable = false;
-	long double	trueValue = 0.0;
+	double	trueValue;
 
 	//Special case: Single char -> use its ascii value
 	if (input.length() == 1 && !std::isdigit(input[0]))
 	{
+		trueValue = static_cast<double>(input[0]);
 		convertable = true;
-		trueValue = static_cast<long double>(input[0]);
 	}
-	else //Check if it's a numeric string
+	//Check if string can be converted to a double value
+	else
 	{
-		const char*	str = input.c_str();
-		char*	endptr = nullptr;
-		trueValue = strtold(str, &endptr); //more checks overflow
-		if (endptr != str)
+		try
 		{
-			if (*endptr == 'f' || *endptr == 'F')
-				endptr++;
-			while (*endptr && std::isspace(*endptr))
-				endptr++;
-			if (*endptr == '\0')
-				convertable = true;
+			convertable = convertStr2Double(input, &trueValue);
+		}
+		catch(const std::out_of_range& e)
+		{
+			convertable = false;
+		}
+		catch(const std::invalid_argument& e)
+		{
+			convertable = false;
 		}
 	}
 	if (convertable == false)
 	{
-		std::cout << "ALL IMPOSSIBLE\n";
+		std::cout << "char: Impossible\n";
+		std::cout << "int: Impossible\n";
+		std::cout << "float: Impossible\n";
+		std::cout << "double: Impossible\n";
 		return;
 	}
 	toChar(trueValue);
-	// toInt(trueValue);
+	toInt(trueValue);
 	// toFloat(trueValue);
 	// toDouble(trueValue);
 	return;
