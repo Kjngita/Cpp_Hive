@@ -1,24 +1,82 @@
 #include "ScalarConverter.hpp"
 
-static bool	convertStr2Double(const std::string& input, double* value) {
-	size_t	i;
-	*value = std::stod(input, &i);
-
-	if (i != input.length()) //not a pure double value
+bool	isValidInt(std::string& str) {
+	size_t	startNum = 0;
+	if (str.front() == '+' || str.front() == '-')
+		startNum++;
+	for (size_t i = startNum; i < str.length(); i++)
 	{
-		if (input.at(i) == 'f' || input.at(i) == 'F')
-			i++;
-		while (i < input.length() && std::isspace(input[i]))
-			i++;
-		if (i != input.length())
+		if (!std::isdigit(str.at(i)))
 			return false;
 	}
 	return true;
 }
 
-static void	toChar(double trueVal) {
+bool	isValidDouble(std::string& str) {
+	if (str == "nan" || str == "inf" || str == "+inf" || str == "-inf")
+		return true;
+	size_t	startNum = 0;
+	if (str.front() == '+' || str.front() == '-')
+		startNum++;
+	size_t	decimalCount = 0;
+	size_t	decimalPos = 0;
+	for (size_t i = startNum; i < str.length(); i++)
+	{
+		if (str.at(i) == '.') {
+			decimalCount++;
+			decimalPos = i;
+		}
+		if (!std::isdigit(str.at(i)) && str.at(i) != '.')
+			return false;
+	}
+	if (decimalCount != 1 || decimalPos == str.length() - 1) //what abt `.25`?
+		return false;
+	return true;
+}
+
+bool	isValidFloat(std::string& str) {
+	if (str == "nanf" || str == "inff" || str == "+inff" || str == "-inff")
+		return true;
+	std::string noTrailingF = str.substr(0, str.length() - 1);
+	if (isValidDouble(noTrailingF))
+		return true;
+	return false;
+}
+
+enum stringIdentity
+{
+	CHAR_TYPE,
+	INT_TYPE,
+	FLOAT_TYPE,
+	DOUBLE_TYPE,
+	INVALID_TYPE
+};
+
+stringIdentity	determineType(std::string& input) {
+
+	if (input.length() == 1 && !std::isdigit(input[0]) && std::isprint(input[0]))
+		return CHAR_TYPE;
+	if (isValidInt(input))
+		return INT_TYPE;
+	if (input.length() > 1 && input.back() == 'f' && isValidFloat(input))
+		return FLOAT_TYPE;
+	if (isValidDouble(input))
+		return DOUBLE_TYPE;
+	return INVALID_TYPE;
+}
+
+bool	isWholeNum(double num) {
+	double intpart, fractpart;
+	fractpart = modf(num, &intpart);
+	if (fractpart == 0.0)
+		return true;
+	else
+		return false;
+}
+
+void	toChar(double trueVal) {
 	std::cout << "char: ";
-	if (std::isnan(trueVal) || std::isinf(trueVal)
+	if (std::isnan(trueVal) || std::isinf(trueVal) || !isWholeNum(trueVal)
 		|| trueVal < 0 || trueVal > 127)
 	{
 		std::cout << "Impossible\n";
@@ -31,9 +89,9 @@ static void	toChar(double trueVal) {
 		std::cout << "Non displayable\n";
 }
 
-static void	toInt(double trueVal) {
+void	toInt(double trueVal) {
 	std::cout << "int: ";
-	if (std::isnan(trueVal) || std::isinf(trueVal)
+	if (std::isnan(trueVal) || std::isinf(trueVal) || !isWholeNum(trueVal)
 		|| trueVal < INT_MIN || trueVal > INT_MAX)
 	{
 		std::cout << "Impossible\n";
@@ -43,37 +101,86 @@ static void	toInt(double trueVal) {
 	std::cout << i << std::endl;
 }
 
-// static void	toFloat(double trueVal) {
+void	toFloat(double trueVal) {
+	std::cout << "float: ";
+	if (std::isnan(trueVal) || std::isinf(trueVal))
+	{
+		std::cout << trueVal << "f\n";
+		return;
+	}
+	if (trueVal < FLT_MIN || trueVal > FLT_MAX)
+	{
+		std::cout << "Impossible\n";
+		return;
+	}
+	float f = static_cast<float>(trueVal);
+	std::cout << f;
+	if (isWholeNum(trueVal))
+		std::cout << ".0f\n";
+	else
+		std::cout << "f\n";
+}
 
-// }
+void	toDouble(double trueVal) {
+	std::cout << "double: ";
+	if (std::isnan(trueVal) || std::isinf(trueVal))
+	{
+		std::cout << trueVal << std::endl;
+		return;
+	}
+	if (isWholeNum(trueVal))
+		std::cout << trueVal << ".0\n";
+	else
+		std::cout << trueVal << "\n";
+}
+
+std::string trimString(const std::string& input) {
+	size_t start = input.find_first_not_of(" \n\t\r\f\v");
+	if (start == std::string::npos)
+		return "";
+	size_t	end = input.find_last_not_of(" \n\t\r\f\v");
+	return input.substr(start, end - start + 1);
+}
 
 void	ScalarConverter::convert(const std::string& input) {
-	bool	convertable = false;
+	std::string cleanStr = trimString(input);
+	stringIdentity	trueType = determineType(cleanStr);
 	double	trueValue;
-
-	//Special case: Single char -> use its ascii value
-	if (input.length() == 1 && !std::isdigit(input[0]))
+	try
 	{
-		trueValue = static_cast<double>(input[0]);
-		convertable = true;
+		switch (trueType)
+		{
+			case CHAR_TYPE:
+			{
+				trueValue = static_cast<double>(cleanStr[0]);
+				break;
+			}
+			case INT_TYPE:
+			{
+				trueValue = static_cast<double>(std::stoi(cleanStr));
+				break;
+			}
+			case FLOAT_TYPE:
+			{
+				trueValue = static_cast<double>(std::stof(cleanStr));
+				break;
+			}
+			case DOUBLE_TYPE:
+			{
+				trueValue = static_cast<double>(std::stod(cleanStr));
+				break;
+			}
+			default: //Unqualified strings
+			{
+				std::cout << "char: Impossible\n";
+				std::cout << "int: Impossible\n";
+				std::cout << "float: Impossible\n";
+				std::cout << "double: Impossible\n";
+				return;
+			}
+		}
 	}
-	//Check if string can be converted to a double value
-	else
-	{
-		try
-		{
-			convertable = convertStr2Double(input, &trueValue);
-		}
-		catch(const std::out_of_range& e)
-		{
-			convertable = false;
-		}
-		catch(const std::invalid_argument& e)
-		{
-			convertable = false;
-		}
-	}
-	if (convertable == false)
+	catch(const std::exception& e) //No conversion or out of range
 	{
 		std::cout << "char: Impossible\n";
 		std::cout << "int: Impossible\n";
@@ -83,7 +190,7 @@ void	ScalarConverter::convert(const std::string& input) {
 	}
 	toChar(trueValue);
 	toInt(trueValue);
-	// toFloat(trueValue);
-	// toDouble(trueValue);
+	toFloat(trueValue);
+	toDouble(trueValue);
 	return;
 }
