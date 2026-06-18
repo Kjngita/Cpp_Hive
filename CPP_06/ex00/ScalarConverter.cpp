@@ -1,5 +1,96 @@
 #include "ScalarConverter.hpp"
 
+enum stringIdentity
+{
+	CHAR_TYPE,
+	INT_TYPE,
+	FLOAT_TYPE,
+	DOUBLE_TYPE,
+	INVALID_TYPE
+};
+
+std::string		trimString(const std::string& input);
+stringIdentity	determineType(std::string& input);
+bool	isValidInt(std::string& str);
+bool	isValidDouble(std::string& str);
+bool	isValidFloat(std::string& str);
+bool	isWholeNum(double num);
+void	toChar(double trueVal);
+void	toInt(double trueVal);
+void	toFloat(double trueVal);
+void	toDouble(double trueVal);
+
+void	ScalarConverter::convert(const std::string& input) {
+	std::string cleanStr = trimString(input);
+	stringIdentity	trueType = determineType(cleanStr);
+	double	trueValue;
+	try
+	{
+		switch (trueType)
+		{
+			case CHAR_TYPE:
+			{
+				trueValue = static_cast<double>(cleanStr[0]);
+				break;
+			}
+			case INT_TYPE:
+			{
+				trueValue = static_cast<double>(std::stoi(cleanStr));
+				break;
+			}
+			case FLOAT_TYPE:
+			{
+				trueValue = static_cast<double>(std::stof(cleanStr));
+				break;
+			}
+			case DOUBLE_TYPE:
+			{
+				trueValue = static_cast<double>(std::stod(cleanStr));
+				break;
+			}
+			default: //Strings that are not one of the 4 data types
+			{
+				std::cout << "char: Impossible\n";
+				std::cout << "int: Impossible\n";
+				std::cout << "float: Impossible\n";
+				std::cout << "double: Impossible\n";
+				return;
+			}
+		}
+	}
+	catch(const std::exception& e) //No conversion or out of range
+	{
+		std::cout << "Conversion impossible\n";
+		return;
+	}
+	toChar(trueValue);
+	toInt(trueValue);
+	toFloat(trueValue);
+	toDouble(trueValue);
+	return;
+}
+
+std::string trimString(const std::string& input) {
+	size_t start = input.find_first_not_of(" \n\t\r\f\v");
+	if (start == std::string::npos)
+		return "";
+	size_t	end = input.find_last_not_of(" \n\t\r\f\v");
+	return input.substr(start, end - start + 1);
+}
+
+stringIdentity	determineType(std::string& input) {
+
+	if (input.length() == 1 && !std::isdigit(input[0]) && std::isprint(input[0]))
+		return CHAR_TYPE;
+	if (isValidInt(input))
+		return INT_TYPE;
+	if (input.length() > 1 && input.back() == 'f' && isValidFloat(input))
+		return FLOAT_TYPE;
+	if (isValidDouble(input))
+		return DOUBLE_TYPE;
+	return INVALID_TYPE;
+}
+
 bool	isValidInt(std::string& str) {
 	size_t	startNum = 0;
 	if (str.front() == '+' || str.front() == '-')
@@ -41,28 +132,6 @@ bool	isValidFloat(std::string& str) {
 	if (isValidDouble(noTrailingF))
 		return true;
 	return false;
-}
-
-enum stringIdentity
-{
-	CHAR_TYPE,
-	INT_TYPE,
-	FLOAT_TYPE,
-	DOUBLE_TYPE,
-	INVALID_TYPE
-};
-
-stringIdentity	determineType(std::string& input) {
-
-	if (input.length() == 1 && !std::isdigit(input[0]) && std::isprint(input[0]))
-		return CHAR_TYPE;
-	if (isValidInt(input))
-		return INT_TYPE;
-	if (input.length() > 1 && input.back() == 'f' && isValidFloat(input))
-		return FLOAT_TYPE;
-	if (isValidDouble(input))
-		return DOUBLE_TYPE;
-	return INVALID_TYPE;
 }
 
 bool	isWholeNum(double num) {
@@ -108,7 +177,7 @@ void	toFloat(double trueVal) {
 		std::cout << trueVal << "f\n";
 		return;
 	}
-	if (trueVal < FLT_MIN || trueVal > FLT_MAX)
+	if (trueVal < -FLT_MAX || trueVal > FLT_MAX)
 	{
 		std::cout << "Impossible\n";
 		return;
@@ -132,65 +201,4 @@ void	toDouble(double trueVal) {
 		std::cout << trueVal << ".0\n";
 	else
 		std::cout << trueVal << "\n";
-}
-
-std::string trimString(const std::string& input) {
-	size_t start = input.find_first_not_of(" \n\t\r\f\v");
-	if (start == std::string::npos)
-		return "";
-	size_t	end = input.find_last_not_of(" \n\t\r\f\v");
-	return input.substr(start, end - start + 1);
-}
-
-void	ScalarConverter::convert(const std::string& input) {
-	std::string cleanStr = trimString(input);
-	stringIdentity	trueType = determineType(cleanStr);
-	double	trueValue;
-	try
-	{
-		switch (trueType)
-		{
-			case CHAR_TYPE:
-			{
-				trueValue = static_cast<double>(cleanStr[0]);
-				break;
-			}
-			case INT_TYPE:
-			{
-				trueValue = static_cast<double>(std::stoi(cleanStr));
-				break;
-			}
-			case FLOAT_TYPE:
-			{
-				trueValue = static_cast<double>(std::stof(cleanStr));
-				break;
-			}
-			case DOUBLE_TYPE:
-			{
-				trueValue = static_cast<double>(std::stod(cleanStr));
-				break;
-			}
-			default: //Unqualified strings
-			{
-				std::cout << "char: Impossible\n";
-				std::cout << "int: Impossible\n";
-				std::cout << "float: Impossible\n";
-				std::cout << "double: Impossible\n";
-				return;
-			}
-		}
-	}
-	catch(const std::exception& e) //No conversion or out of range
-	{
-		std::cout << "char: Impossible\n";
-		std::cout << "int: Impossible\n";
-		std::cout << "float: Impossible\n";
-		std::cout << "double: Impossible\n";
-		return;
-	}
-	toChar(trueValue);
-	toInt(trueValue);
-	toFloat(trueValue);
-	toDouble(trueValue);
-	return;
 }
