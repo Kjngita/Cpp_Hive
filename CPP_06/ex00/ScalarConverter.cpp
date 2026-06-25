@@ -84,7 +84,7 @@ stringIdentity	determineType(std::string& input) {
 		return CHAR_TYPE;
 	if (isValidInt(input))
 		return INT_TYPE;
-	if (input.length() > 1 && input.back() == 'f' && isValidFloat(input))
+	if (input.back() == 'f' && isValidFloat(input))
 		return FLOAT_TYPE;
 	if (isValidDouble(input))
 		return DOUBLE_TYPE;
@@ -102,7 +102,7 @@ bool	isValidInt(std::string& str) {
 	}
 	return true;
 }
-
+ 
 bool	isValidDouble(std::string& str) {
 	if (str == "nan" || str == "inf" || str == "+inf" || str == "-inf")
 		return true;
@@ -182,12 +182,24 @@ void	toFloat(double trueVal) {
 		std::cout << "Impossible\n";
 		return;
 	}
+
 	float f = static_cast<float>(trueVal);
-	std::cout << f;
-	if (isWholeNum(trueVal))
-		std::cout << ".0f\n";
+
+	std::ostringstream oss;
+	oss << std::setprecision(7) << f;
+	std::string formatted = oss.str();
+
+	if (formatted.find('.') != std::string::npos)
+	{
+		while (formatted.length() > 1 && formatted.back() == '0')
+			formatted.pop_back();
+		if (formatted.back() == '.')
+			formatted.push_back('0');
+	}
 	else
-		std::cout << "f\n";
+		formatted.append(".0");
+
+	std::cout << formatted << "f\n";
 }
 
 void	toDouble(double trueVal) {
@@ -199,6 +211,20 @@ void	toDouble(double trueVal) {
 	}
 	if (isWholeNum(trueVal))
 		std::cout << trueVal << ".0\n";
+	else {
+	std::ostringstream oss;
+	oss << std::setprecision(15) << trueVal;
+	std::string formatted = oss.str();
+
+	if (formatted.find('.') != std::string::npos)
+	{
+		while (formatted.length() > 1 && formatted.back() == '0')
+			formatted.pop_back();
+		if (formatted.back() == '.')
+			formatted.push_back('0');
+	}
 	else
-		std::cout << trueVal << "\n";
+		formatted.append(".0");
+
+	std::cout << formatted << "\n"; }
 }
