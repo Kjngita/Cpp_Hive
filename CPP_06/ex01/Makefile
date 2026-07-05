@@ -3,13 +3,13 @@ FLAGS = -Wall -Wextra -Werror -std=c++11
 COMPILER = c++
 
 S_DIR = src
-SRC_FILES = main.cpp ScalarConverter.cpp
+SRC_FILES = $(S_DIR)/main.cpp $(S_DIR)/Data.cpp
 
 O_DIR =  obj
-OFILES = $(SRC_FILES:%.cpp=$(O_DIR)/%.o)
+OFILES = $(SRC_FILES:$(S_DIR)/%.cpp=$(O_DIR)/%.o)
 
 D_DIR = dep
-DFILES = $(SRC_FILES:%.cpp=$(D_DIR)/%.d)
+DFILES = $(SRC_FILES:$(S_DIR)/%.cpp=$(D_DIR)/%.d)
 
 all: $(NAME)
 
@@ -22,7 +22,7 @@ $(NAME): $(OFILES)
 $(O_DIR) $(D_DIR):
 	mkdir -p $@
 
-$(O_DIR)/%.o: $(SRC_DIR)/%.cpp | $(O_DIR) $(D_DIR)
+$(O_DIR)/%.o: $(S_DIR)/%.cpp | $(O_DIR) $(D_DIR)
 	$(COMPILER) $(FLAGS) -Iinc -MMD -MP -MF $(D_DIR)/$*.d -c $< -o $@
 
 clean:
