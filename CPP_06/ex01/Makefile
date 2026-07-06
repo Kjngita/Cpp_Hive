@@ -1,9 +1,9 @@
-NAME = serial
+NAME = transformation
 FLAGS = -Wall -Wextra -Werror -std=c++11
 COMPILER = c++
 
 S_DIR = src
-SRC_FILES = $(S_DIR)/main.cpp $(S_DIR)/Data.cpp
+SRC_FILES = $(S_DIR)/main.cpp $(S_DIR)/Data.cpp $(S_DIR)/Serializer.cpp
 
 O_DIR =  obj
 OFILES = $(SRC_FILES:$(S_DIR)/%.cpp=$(O_DIR)/%.o)
