@@ -16,7 +16,6 @@ Base*	generate() {
 }
 
 void	identify(Base* p) {
-	//prints the actual type of the object pointed to by p: "A", "B", or "C"
 	if (dynamic_cast<A*>(p) != nullptr)
 	{
 		std::cout << "A\n";
@@ -36,8 +35,33 @@ void	identify(Base* p) {
 		std::cout << "Unknown type, which shouldn't be possible ;_;\n";
 }
 
-// void	identify(Base& p) {
-// // prints the actual type of the object referenced by p: "A", "B", or "C". Using a pointer
-// // inside this function is forbidden
-// 	if ()
-// }
+void	identify(Base& p) {
+	try
+	{
+		A& a = dynamic_cast<A&>(p);
+		(void)a;
+		std::cout << "A\n";
+		return;
+	}
+	catch (std::exception& e) {}
+	
+	try
+	{
+		B& b = dynamic_cast<B&>(p);
+		(void)b;
+		std::cout << "B\n";
+		return;
+	}
+	catch (std::exception& e) {}
+	
+	try
+	{
+		C& c = dynamic_cast<C&>(p);
+		(void)c;
+		std::cout << "C\n";
+		return;
+	}
+	catch (std::exception& e) {}
+
+	std::cout << "Unknown type, which shouldn't be possible ;_;\n";
+}

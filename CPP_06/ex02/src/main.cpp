@@ -9,7 +9,7 @@ int main()
 		std::cout << "Identify using pointer: ";
 		identify(type);
 		std::cout << "Identify using reference: ";
-		// identify(&type);
+		identify(*type);
 		std::cout << std::endl;
 		delete type;
 	}
