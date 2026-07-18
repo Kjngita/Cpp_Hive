@@ -13,7 +13,8 @@ class Array
 		Array(const Array& other);
 		~Array();
 		Array& operator=(const Array& other);
-		Array& operator[](unsigned int index);
+		T& operator[](unsigned int index);
+		T& operator[](unsigned int index) const;
 
 		unsigned int size() const;
 };
