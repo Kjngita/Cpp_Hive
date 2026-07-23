@@ -1,8 +1,7 @@
-NAME = peasy
+NAME = tac
 FLAGS = -Wall -Wextra -Werror -std=c++11
 COMPILER = c++
 
-#S_DIR = src
 SRC_FILES = main.cpp
 
 O_DIR =  obj
