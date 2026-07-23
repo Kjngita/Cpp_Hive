@@ -1,6 +1,6 @@
 #include "easyfind.hpp"
 #include <vector>
-#include <set>
+#include <list>
 #include <deque>
 
 int main()
@@ -11,11 +11,11 @@ int main()
 		try
 		{
 			int test = 5;
-			std::cout << "Find " << test << "  ->\t";
+			std::cout << "  Find " << test << "  ->\t";
 			easyfind(v, test);
 			std::cout << "v has int " << test << std::endl;
 			test = 10;
-			std::cout << "Find " << test << "  ->\t";
+			std::cout << "  Find " << test << "  ->\t";
 			easyfind(v, test);
 			std::cout << "v has int " << test << std::endl;
 		}
@@ -26,18 +26,18 @@ int main()
 	}
 
 	{
-		std::set<int> s = {75, 23, 48};
-		std::cout << "\nSet s = {75, 23, 48};\n";
+		std::list<int> l = {75, 23, 48};
+		std::cout << "\nList l = {75, 23, 48};\n";
 		try
 		{
 			int test = 23;
-			std::cout << "Find " << test << "  ->\t";
-			easyfind(s, test);
-			std::cout << "s has int " << test << std::endl;
+			std::cout << "  Find " << test << "  ->\t";
+			easyfind(l, test);
+			std::cout << "l has int " << test << std::endl;
 			test = 68;
-			std::cout << "Find " << test << "  ->\t";
-			easyfind(s, test);
-			std::cout << "s has int " << test << std::endl;
+			std::cout << "  Find " << test << "  ->\t";
+			easyfind(l, test);
+			std::cout << "l has int " << test << std::endl;
 		}
 		catch(const std::exception& e)
 		{
@@ -51,7 +51,7 @@ int main()
 		try
 		{
 			int test = 100;
-			std::cout << "Find " << test << "  ->\t";
+			std::cout << "  Find " << test << "  ->\t";
 			easyfind(d, test);
 			std::cout << "d has int " << test << std::endl;
 		}
