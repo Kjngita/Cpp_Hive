@@ -2,77 +2,84 @@
 
 int main()
 {
-	// Array<int> test1;
-	// Array<int> test2(12);
+	std::cout << "   === INT ARRAYS ===\n\n";
 
-	// std::cout << test1.size() << std::endl;
-	// std::cout << test2.size() << std::endl;
-
-	// test1 = test2;
-	// std::cout << test1.size() << std::endl;
-
-	// std::cout << test2[3] << std::endl;
+	std::cout << "Test int array. Length = ";
+	Array<int> intArr(7);
+	std::cout << intArr.size() << std::endl;
+	for (unsigned int i = 0; i < intArr.size(); i++)
+		std::cout << intArr[i] << " ";
 	
-	#define MAX_VAL 5
-	std::cout << std::endl << "Array<std::string> TESTS: " << std::endl;
-    Array<std::string> empty;
-    std::cout << "empty string len: " << empty.size() << std::endl;
-    Array<std::string> str(MAX_VAL);
-    std::cout << "string len: " << str.size() << std::endl << std::endl;
-    for (int i = 0; i < MAX_VAL; i++)
-    {
-        str[i] = "test string " + std::to_string(i);
-        std::cout << str[i] << std::endl;
-    }
+	std::cout << "\n[ Copy constructor ]\n";
+	std::cout << "\tarrCopy: \n\t";
+	Array<int> arrCopy(intArr);
+	for (unsigned int i = 0; i < arrCopy.size(); i++)
+		std::cout << " " << arrCopy[i] ;
+	arrCopy[0] = 987;
+	std::cout << "\n\tModified arrCopy: \n\t";
+	for (unsigned int i = 0; i < arrCopy.size(); i++)
+		std::cout << " " << arrCopy[i];
+	
+	std::cout << "\n[ Copy assignment ]\n";
+	Array<int> zero;
+	std::cout << "\tEmpty int array. Length = " << zero.size();
+	zero = arrCopy;
+	std::cout << "\n\tModified empty array: \n\t";
+	for (unsigned int i = 0; i < zero.size(); i++)
+	{
+		if (i == 3)
+			zero[i] = 123;
+		std::cout << " " << zero[i];
+	}
 
-    std::cout << std::endl << "COPY AND ASSIGNMENT TESTS: " << std::endl;
-    Array<std::string> assignment = str;
-    Array<std::string> copy(assignment);
-    for (int i = 0; i < MAX_VAL; i++)
-    {
-        if (assignment[i] != str[i] || copy[i] != assignment[i])
-        {
-            std::cerr << "didn't save the same value!!" << std::endl;
-            return 1;
-        }
-        else
-            std::cout << "ok"  << std::endl;
-    }
-    for (int i = 0; i < MAX_VAL; i++)
-    {
-        str[i] = "modified string" + std::to_string(i);
-        std::cout << str[i] << std::endl;
-        std::cout << assignment[i] << std::endl;
-        std::cout << copy[i] << std::endl;
-    }
-    std::cout << std::endl << "INDEX OUT OF BOUNDS TESTS: " << std::endl;
-    try
-    {
-        str[-1] = "test -1";
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-    try
-    {
-        str[MAX_VAL] = "test max";
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-    std::cout << "\nCONST ARRAY TEST\n";
-    try{
-	const Array<int> constArray(5);
-	for (unsigned int i = 0; i < constArray.size(); i++)
-		std::cout << constArray[i] << '\n';
-    std::cout << constArray[-1] << '\n';
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
+	std::cout << "\nOriginal test int array unharmed: \n";
+	for (unsigned int i = 0; i < intArr.size(); i++)
+		std::cout << " " << intArr[i];
+
+//----------------------------------------------------------------
+	std::cout << "\n\n   === STR ARRAYS ===\n\n";
+
+	std::cout << "Normal array = { ";
+	Array<std::string> strArr(3);
+	for (unsigned int i = 0; i < strArr.size(); i++)
+	{
+		strArr[i] = "String " + std::to_string(i+1);
+		if (i != strArr.size() - 1)
+			std::cout << strArr[i] << ", ";
+		else
+			std::cout << strArr[i] << " }\n";
+	}
+	try
+	{
+		std::cout << "[ Out of bound - normal array ]\n";
+		std::cout << "\tIndex [-2]\t-> ";
+		std::cout << strArr[-2];
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	
+	std::cout << "Const array = { ";
+	const Array<std::string> constStrArr(3);
+	for (unsigned int i = 0; i < constStrArr.size(); i++)
+	{
+		constStrArr[i] = "Line " + std::to_string(i+1);
+		if (i != constStrArr.size() - 1)
+			std::cout << constStrArr[i] << ", ";
+		else
+			std::cout << constStrArr[i] << " }\n";
+	}
+	try
+	{
+		std::cout << "[ Out of bound - const array ]\n";
+		std::cout << "\tIndex [10]\t-> ";
+		std::cout << constStrArr[10] << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
 
 	return 0;
 }
