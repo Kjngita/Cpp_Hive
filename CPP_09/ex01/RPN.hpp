@@ -7,10 +7,10 @@
 class RPN
 {
 	public:
-		RPN();
-		~RPN();
+		RPN() = delete;
+		~RPN() = delete;
 		RPN(const RPN& other) = delete;
 		RPN& operator=(const RPN& other) = delete;
 
-		bool	calculatable(std::string_view& problem, int& result);
+		static int	calculate(std::string& problem);
 };
