@@ -1,12 +1,23 @@
 #pragma once
 
 #include <iostream>
+#include <map>
+#include <fstream>
 
 class BitcoinExchange
 {
+	private:
+		std::map<std::string, double>	priceHistory;
 	public:
-		BitcoinExchange() = delete;
+		BitcoinExchange();
 		BitcoinExchange(const BitcoinExchange& other) = delete;
-		~BitcoinExchange() = delete;
+		~BitcoinExchange();
 		BitcoinExchange& operator=(const BitcoinExchange& other) = delete;
+
+		void	loadData(std::string fileName);
+		void	parseInputFile(std::string	inputFile);
+		double	findPrice(const std::string& date) const;
+
+		bool	isValidFormat(const std::string& line, std::string& date, double& value);
+		bool	isValidDate(const std::string& date);
 };
