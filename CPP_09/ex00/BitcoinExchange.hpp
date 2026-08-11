@@ -2,7 +2,10 @@
 
 #include <iostream>
 #include <map>
-#include <fstream>
+#include <fstream>	//for infile
+#include <sstream>	//for modyfying date
+#include <iomanip>	//for adding 0 in dates
+#include <ctime>	//for checking time
 
 class BitcoinExchange
 {
@@ -20,4 +23,5 @@ class BitcoinExchange
 
 		bool	isValidFormat(const std::string& line, std::string& date, double& value);
 		bool	isValidDate(const std::string& date);
+		std::string normalizeDate(const std::string& date);
 };
