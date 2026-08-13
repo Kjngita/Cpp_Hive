@@ -3,9 +3,8 @@
 #include <iostream>
 #include <map>
 #include <fstream>	//for infile
-#include <sstream>	//for modyfying date
+#include <sstream>	//for validating and modifying date
 #include <iomanip>	//for adding 0 in dates
-#include <ctime>	//for checking time
 
 class BitcoinExchange
 {
@@ -21,7 +20,7 @@ class BitcoinExchange
 		void	parseInputFile(std::string	inputFile);
 		double	findPrice(const std::string& date) const;
 
-		bool	isValidFormat(const std::string& line, std::string& date, double& value);
-		bool	isValidDate(const std::string& date);
+		bool	isValidFormat(const std::string& line, std::string& date, std::string& standardDate, double& value);
+		bool	isValidDate(const std::string& date, std::string& standardDate);
 		std::string normalizeDate(const std::string& date);
 };
