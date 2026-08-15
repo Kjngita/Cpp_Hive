@@ -16,11 +16,11 @@ class PmergeMe
 		PmergeMe& operator=(const PmergeMe& other) = delete;
 
 		void	sortFoJo(std::vector<int>& chain);
-		int		binaryInsertion(std::vector<int>& vec, int value);
+		int		insertionPosVec(std::vector<int>& vec, int val, int upperbound);
 		void	sortFoJo(std::deque<int>& chain);
-		int		binaryInsertion(std::deque<int>& deq, int value);
+		int		insertionPosDeq(std::deque<int>& deq, int value);
 
-		std::vector<int>	generateJacob(size_t quantity);
 		std::vector<int>	optimalOrder(size_t pendSize);
+		std::vector<int>	generateJacob(size_t quantity);
 
 };

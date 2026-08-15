@@ -47,7 +47,7 @@ std::vector<int>	PmergeMe::optimalOrder(size_t pendSize) {
 		}
 	}
 	
-	return indexOrder;
+	return indexOrder; // 1 3 2 5 4 9 8 7 6
 }
 
 //Sort using vector
@@ -72,24 +72,53 @@ void	PmergeMe::sortFoJo(std::vector<int>& chain)  {
 
 	//Spliting pairs to main (bigger ints) and pend (smaller) chains
 	std::vector<int>	main;
-	std::vector<int>	pend;
+	std::vector<int>	pendTmp; //will use a rearranged version later
 	for (auto &pair : duo) {
-		pend.push_back(pair.first);
+		pendTmp.push_back(pair.first);
 		main.push_back(pair.second);
 	}
 
-	//Recursion on the main chain until there is only one element
+	//Recursive splitting on the main chain until there is only one element
 	sortFoJo(main);
 
+	//Create official pend chain to align elems with main chain that was sorted at the end from prev recursion
+	std::vector<int>	pend;
+	for (int mainVal : main) {
+		for (auto& pair : duo) {
+			if (pair.second == mainVal)
+				pend.push_back(pair.first);
+		}
+	}
+	
 	//pend[0] was paired with main[0] -> pend[0] < main[0] -> safe to insert
 	main.insert(main.begin(), pend[0]);
-
-	//Get the order to work with pend elems according to pend chain size
+	
+	//Get the best order of index of pend elems, ensures less comparisons when adding to main chain
 	std::vector<int>	pendOrder = optimalOrder(pend.size());
+	for (int index : pendOrder) {
+		int pos = insertionPosVec(main, pend[index], index);
+		main.insert(main.begin() + pos, pend[index]);
+	}
+
+	if (oddOneOut >= 0) {
+		int pos = insertionPosVec(main, oddOneOut, main.size() - 1);
+		main.insert(main.begin() + pos, oddOneOut);
+	}
+
+	chain = main;
 }
 
-int		PmergeMe::binaryInsertion(std::vector<int>& vec, int value) {
-
+int		PmergeMe::insertionPosVec(std::vector<int>& vec, int val, int boundaryPos) {
+	int left = 0;
+	int right = boundaryPos;
+	while (left < right) {
+		int mid = left + (right - left) / 2;
+		if (vec[mid] < val)
+			left = mid + 1;
+		else
+			right = mid;
+	}
+	return left;
 }
 
 //Sort using deque
@@ -97,6 +126,6 @@ void	PmergeMe::sortFoJo(std::deque<int>& chain) {
 
 }
 
-int		PmergeMe::binaryInsertion(std::deque<int>& deq, int value) {
+int		PmergeMe::insertionPosDeq(std::deque<int>& deq, int value) {
 
 }

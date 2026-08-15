@@ -1,4 +1,5 @@
 #include "PmergeMe.hpp"
+#include <algorithm>
 
 int	checkNum(std::string numStr)
 {
@@ -42,12 +43,20 @@ int main(int ac, char** av)
 
 	PmergeMe	sorter;
 	auto vecStart = std::chrono::high_resolution_clock::now();
-	//sort vec
+	sorter.sortFoJo(vec);
+	if (!std::is_sorted(vec.begin(), vec.end())) {
+		std::cerr << "Vector not sorted properly\n";
+		return 1;
+	}
 	auto vecDone = std::chrono::high_resolution_clock::now();
 	auto vecTime = std::chrono::duration_cast<std::chrono::microseconds>(vecDone - vecStart).count();
 
 	auto deqStart = std::chrono::high_resolution_clock::now();
 	//sort deq
+	if (!std::is_sorted(deq.begin(), deq.end())) {
+		std::cerr << "Deque not sorted properly\n";
+		return 1;
+	}
 	auto deqDone = std::chrono::high_resolution_clock::now();
 	auto deqTime = std::chrono::duration_cast<std::chrono::microseconds>(deqDone - deqStart).count();
 
