@@ -6,9 +6,9 @@ int	checkNum(std::string numStr)
 	size_t	pos;
 	int num = std::stoi(numStr, &pos);
 	if (pos != numStr.length())
-		throw std::runtime_error("Not an integer input found");
+		throw std::runtime_error("Not an integer input: " + numStr);
 	if (num < 0)
-		throw std::out_of_range("Only positive integers pls");
+		throw std::out_of_range("Not a positive integer: " + numStr);
 	return num;
 }
 
@@ -22,7 +22,6 @@ int main(int ac, char** av)
 
 	std::vector<int>	vec;
 	std::deque<int>		deq;
-	std::cout << "Before:\t";
 	for (int i = 1; i < ac; i++)
 	{
 		try
@@ -31,7 +30,6 @@ int main(int ac, char** av)
 			int num = checkNum(numStr);
 			vec.emplace_back(num);
 			deq.emplace_back(num);
-			std::cout << num << " ";
 		}
 		catch(const std::exception& e)
 		{
@@ -39,36 +37,43 @@ int main(int ac, char** av)
 			return 1;
 		}
 	}
+	std::cout << "Before:\t";
+	for (int i = 0; i < ac; i++) {
+		std::cout << av[i] << " ";		
+	}
 	std::cout << std::endl;
 
 	PmergeMe	sorter;
 	auto vecStart = std::chrono::high_resolution_clock::now();
 	sorter.sortFoJo(vec);
-	if (!std::is_sorted(vec.begin(), vec.end())) {
-		std::cerr << "Vector not sorted properly\n";
-		return 1;
-	}
 	auto vecDone = std::chrono::high_resolution_clock::now();
 	auto vecTime = std::chrono::duration_cast<std::chrono::microseconds>(vecDone - vecStart).count();
-
-	auto deqStart = std::chrono::high_resolution_clock::now();
-	//sort deq
-	if (!std::is_sorted(deq.begin(), deq.end())) {
-		std::cerr << "Deque not sorted properly\n";
+	if (!std::is_sorted(vec.begin(), vec.end())) {
+		std::cerr << "Vector not sorted properly\n";
+		for (auto &elem : vec) {
+			std::cout << elem << " ";
+		}
 		return 1;
 	}
-	auto deqDone = std::chrono::high_resolution_clock::now();
-	auto deqTime = std::chrono::duration_cast<std::chrono::microseconds>(deqDone - deqStart).count();
+
+	// auto deqStart = std::chrono::high_resolution_clock::now();
+	// //sort deq
+	// if (!std::is_sorted(deq.begin(), deq.end())) {
+	// 	std::cerr << "Deque not sorted properly\n";
+	// 	return 1;
+	// }
+	// auto deqDone = std::chrono::high_resolution_clock::now();
+	// auto deqTime = std::chrono::duration_cast<std::chrono::microseconds>(deqDone - deqStart).count();
 
 	std::cout << "After:\t";
-	for (auto &elem : deq) {
+	for (auto &elem : vec) {
 		std::cout << elem << " ";
 	}
 	std::cout << std::endl;
 	std::cout << "Time to process a range of " << vec.size() << " elements with "
 			<< "std::vector => " << vecTime << " us\n";
-	std::cout << "Time to process a range of " << deq.size() << " elements with "
-			<< "std::deque => " << deqTime << " us\n";
+	// std::cout << "Time to process a range of " << deq.size() << " elements with "
+	// 		<< "std::deque => " << deqTime << " us\n";
 
 	return 0;
 }

@@ -13,7 +13,7 @@ std::vector<int>	PmergeMe::generateJacob(size_t quantity) {
 
 	while (sequence.size() < quantity) {
 		size_t	last = sequence.size() - 1;
-		int next = sequence[last] + 2 * sequence[last - 1];
+		size_t	next = sequence[last] + 2 * sequence[last - 1];
 		if (next >= quantity)
 			break;
 		sequence.push_back(next);
@@ -23,7 +23,7 @@ std::vector<int>	PmergeMe::generateJacob(size_t quantity) {
 
 //shared helper function to determine optimal order to insert elements from pend to main
 std::vector<int>	PmergeMe::optimalOrder(size_t pendSize) {
-	std::vector<int>	jacobSeq = generateJacob(pendSize); // 0 1 1 3 5 
+	std::vector<int>	jacobSeq = generateJacob(pendSize);
 	std::vector<int>	indexOrder;
 	std::vector<bool>	usedIndex(pendSize, false);
 
@@ -47,7 +47,7 @@ std::vector<int>	PmergeMe::optimalOrder(size_t pendSize) {
 		}
 	}
 	
-	return indexOrder; // 1 3 2 5 4 9 8 7 6
+	return indexOrder;
 }
 
 //Sort using vector
@@ -55,10 +55,11 @@ void	PmergeMe::sortFoJo(std::vector<int>& chain)  {
 	if (chain.size() <= 1)
 		return;
 	
-	//Pair elements, each pair has smaller int first and bigger int second
+	//Pair elements with [smaller, bigger] format until possible odd element
 	std::vector<std::pair<int, int>>	duo;
+	bool	hasOdd = false;
 	int		oddOneOut = -1;
-	for (size_t	i = 0; i < chain.size(); i += 2) {
+	for (size_t	i = 0; i + 1 < chain.size(); i += 2) {
 		int	a = chain[i];
 		int b = chain[i+1];
 		if (a < b)
@@ -67,8 +68,10 @@ void	PmergeMe::sortFoJo(std::vector<int>& chain)  {
 			duo.push_back({b,a});
 
 	}
-	if (chain.size() % 2 != 0)
+	if (chain.size() % 2 != 0) {
+		hasOdd = true;
 		oddOneOut = chain.back();
+	}
 
 	//Spliting pairs to main (bigger ints) and pend (smaller) chains
 	std::vector<int>	main;
@@ -90,18 +93,32 @@ void	PmergeMe::sortFoJo(std::vector<int>& chain)  {
 		}
 	}
 	
-	//pend[0] was paired with main[0] -> pend[0] < main[0] -> safe to insert
+	//pend[0] was paired with main[0] -> pend[0] <= main[0] -> safe to insert
 	main.insert(main.begin(), pend[0]);
+
+	//Keep a list of main elems' indices, which will alter when inserting
+	std::vector<int>	mainElemsPos(main.size());
+	for (size_t i = 0; i < main.size(); i++) {
+		mainElemsPos[i] = i + 1; //since pend[0] was already inserted
+	}
 	
 	//Get the best order of index of pend elems, ensures less comparisons when adding to main chain
 	std::vector<int>	pendOrder = optimalOrder(pend.size());
-	for (int index : pendOrder) {
-		int pos = insertionPosVec(main, pend[index], index);
-		main.insert(main.begin() + pos, pend[index]);
-	}
 
-	if (oddOneOut >= 0) {
-		int pos = insertionPosVec(main, oddOneOut, main.size() - 1);
+	//Insert pend to main and update the OG main elems indices
+	for (int index : pendOrder) {
+		int	pairPos = mainElemsPos[index];
+		int pos = insertionPosVec(main, pend[index], pairPos);
+		main.insert(main.begin() + pos, pend[index]);
+		for (size_t i = 0; i < mainElemsPos.size(); i++) {
+			//from insertion point, all elems on the right move right by 1
+			if (mainElemsPos[i] >= pos)
+				mainElemsPos[i]++;
+		}
+	}
+	//Full range search for odd element
+	if (hasOdd) {
+		int pos = insertionPosVec(main, oddOneOut, main.size());
 		main.insert(main.begin() + pos, oddOneOut);
 	}
 
@@ -121,11 +138,11 @@ int		PmergeMe::insertionPosVec(std::vector<int>& vec, int val, int boundaryPos) 
 	return left;
 }
 
-//Sort using deque
-void	PmergeMe::sortFoJo(std::deque<int>& chain) {
+// //Sort using deque
+// void	PmergeMe::sortFoJo(std::deque<int>& chain) {
 
-}
+// }
 
-int		PmergeMe::insertionPosDeq(std::deque<int>& deq, int value) {
+// int		PmergeMe::insertionPosDeq(std::deque<int>& deq, int value) {
 
-}
+// }
