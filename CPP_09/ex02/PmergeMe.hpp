@@ -18,9 +18,8 @@ class PmergeMe
 		void	sortFoJo(std::vector<int>& chain);
 		int		insertionPosVec(std::vector<int>& vec, int val, int upperbound);
 		void	sortFoJo(std::deque<int>& chain);
-		int		insertionPosDeq(std::deque<int>& deq, int value);
+		int		insertionPosDeq(std::deque<int>& deq, int val, int boundaryPos);
 
 		std::vector<int>	optimalOrder(size_t pendSize);
 		std::vector<int>	generateJacob(size_t quantity);
-
 };

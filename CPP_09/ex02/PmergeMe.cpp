@@ -62,7 +62,7 @@ void	PmergeMe::sortFoJo(std::vector<int>& chain)  {
 	for (size_t	i = 0; i + 1 < chain.size(); i += 2) {
 		int	a = chain[i];
 		int b = chain[i+1];
-		if (a < b)
+		if (a < b || (a == b && i % 2 == 0))
 			duo.push_back({a,b});
 		else
 			duo.push_back({b,a});
@@ -85,11 +85,16 @@ void	PmergeMe::sortFoJo(std::vector<int>& chain)  {
 	sortFoJo(main);
 
 	//Create official pend chain to align elems with main chain that was sorted at the end from prev recursion
+	//Keep a vector of bools to keep track of which pair was used in case of duplicate values
 	std::vector<int>	pend;
+	std::vector<bool>	usedPair(duo.size(), false);
 	for (int mainVal : main) {
-		for (auto& pair : duo) {
-			if (pair.second == mainVal)
-				pend.push_back(pair.first);
+		for (size_t i = 0; i < duo.size(); i++) {
+			if (duo[i].second == mainVal && !usedPair[i]) {
+				pend.push_back(duo[i].first);
+				usedPair[i] = true;
+				break;
+			}
 		}
 	}
 	
@@ -138,11 +143,98 @@ int		PmergeMe::insertionPosVec(std::vector<int>& vec, int val, int boundaryPos) 
 	return left;
 }
 
-// //Sort using deque
-// void	PmergeMe::sortFoJo(std::deque<int>& chain) {
+//Sort using deque
+void	PmergeMe::sortFoJo(std::deque<int>& chain) {
+	if (chain.size() <= 1)
+		return;
+	
+	//pair
+	std::deque<std::pair<int, int>>	partners;
+	for (size_t i = 0; i + 1 < chain.size(); i+=2) {
+		int a = chain[i];
+		int b = chain[i+1];
+		if (a < b)
+			partners.push_back({a, b});
+		else
+			partners.push_back({b, a});
+	}
+	
+	//odd
+	bool	hasOdd = false;
+	int		oddOne;
+	if (chain.size() % 2 != 0) {
+		hasOdd = true;
+		oddOne = chain.back();
+	}
 
-// }
+	//split
+	std::deque<int>	bigNums;
+	std::deque<int>	smallNumsTmp;
+	for (auto &pair : partners) {
+		smallNumsTmp.push_back(pair.first);
+		bigNums.push_back(pair.second);
+	}
 
-// int		PmergeMe::insertionPosDeq(std::deque<int>& deq, int value) {
+	//recursion
+	sortFoJo(bigNums);
 
-// }
+	//rearrange pend & keep track of used pairs
+	std::deque<int>		smallNums;
+	std::deque<bool>	usedPair(partners.size(), false);
+
+	for (int valBig : bigNums) {
+		for (size_t i = 0; i < partners.size(); i++) {
+			if (partners[i].second == valBig && !usedPair[i]) {
+				smallNums.push_back(partners[i].first);
+				usedPair[i] = true;
+				break;
+			}
+		}
+	}
+
+	//insert pend[0] in front of main[0]
+	bigNums.insert(bigNums.begin(), smallNums[0]);
+	
+	//keep track of index
+	std::deque<int>	bigNumsIndices(bigNums.size());
+	for (size_t i = 0; i < bigNums.size(); i++) {
+		bigNumsIndices[i] = i + 1;
+	}
+	
+	//get order
+	std::vector<int>	bestOrderOfIndex = optimalOrder(smallNums.size());
+
+	//insert to main + update order
+	for (int idx : bestOrderOfIndex) {
+		int	partnerPos = bigNumsIndices[idx];
+		int	insertPos = insertionPosDeq(bigNums, smallNums[idx], partnerPos);
+		bigNums.insert(bigNums.begin() + insertPos, smallNums[idx]);
+
+		for (size_t i = 0; i < bigNumsIndices.size(); i++) {
+			if (bigNumsIndices[i] >= insertPos)
+				bigNumsIndices[i]++;
+		}
+	}
+
+	//add odd
+	if (hasOdd) {
+		int	insertPos = insertionPosDeq(bigNums, oddOne, bigNums.size());
+		bigNums.insert(bigNums.begin() + insertPos, oddOne);
+	}
+
+	//chain = main
+	chain = bigNums;
+}
+
+int		PmergeMe::insertionPosDeq(std::deque<int>& deq, int val, int boundaryPos) {
+	int left = 0;
+	int right = boundaryPos;
+	while (left < right) {
+		int mid = left + (right - left) / 2;
+		if (deq[mid] < val)
+			left = mid + 1;
+		else
+			right = mid;
+	}
+	return left;
+}
