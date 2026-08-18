@@ -1,40 +1,4 @@
 #include "PmergeMe.hpp"
-#include <algorithm>
-
-inline int	checkNum(std::string numStr)
-{
-	size_t	pos;
-	int num = std::stoi(numStr, &pos);
-	if (pos != numStr.length())
-		throw std::runtime_error("Not an integer input: " + numStr);
-	if (num < 0)
-		throw std::out_of_range("Not a positive integer: " + numStr);
-	return num;
-}
-
-inline bool	checkContainers(std::vector<int>& vec, std::deque<int>& deq)
-{
-	
-	if (!std::is_sorted(vec.begin(), vec.end())) {
-		std::cerr << "Vector not sorted properly\n";
-		return false;
-	}
-	if (!std::is_sorted(deq.begin(), deq.end())) {
-		std::cerr << "Deque not sorted properly\n";
-		return false;
-	}
-	if (vec.size() != deq.size()) {
-		std::cerr << "Vec and deq don't have the same number of elements\n";
-		return false;
-	}
-	for (size_t idx = 0; idx < vec.size(); idx++) {
-		if (vec[idx] != deq[idx]) {
-			std::cerr << "Vec and deq don't have the same elements\n";
-			return false;
-		}
-	}
-	return true;
-}
 
 int main(int ac, char** av)
 {
@@ -44,6 +8,7 @@ int main(int ac, char** av)
 		return 1;
 	}
 
+	PmergeMe			sorter;
 	std::vector<int>	vec;
 	std::deque<int>		deq;
 	for (int i = 1; i < ac; i++)
@@ -51,7 +16,7 @@ int main(int ac, char** av)
 		try
 		{
 			std::string	numStr = av[i];
-			int num = checkNum(numStr);
+			int num = sorter.checkNum(numStr);
 			vec.emplace_back(num);
 			deq.emplace_back(num);
 		}
@@ -67,7 +32,6 @@ int main(int ac, char** av)
 	}
 	std::cout << std::endl;
 
-	PmergeMe	sorter;
 	auto vecStart = std::chrono::high_resolution_clock::now();
 	sorter.sortFoJo(vec);
 	auto vecDone = std::chrono::high_resolution_clock::now();
@@ -78,7 +42,7 @@ int main(int ac, char** av)
 	auto deqDone = std::chrono::high_resolution_clock::now();
 	auto deqTime = std::chrono::duration_cast<std::chrono::microseconds>(deqDone - deqStart).count();
 
-	if (!checkContainers(vec, deq))
+	if (!sorter.checkContainers(vec, deq))
 		return 1;
 	
 	std::cout << "After:\t";

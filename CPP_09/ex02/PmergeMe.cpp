@@ -4,6 +4,70 @@ PmergeMe::PmergeMe() {}
 
 PmergeMe::~PmergeMe() {}
 
+//Validate input
+int	PmergeMe::checkNum(std::string numStr) {
+	size_t	pos;
+	int num = std::stoi(numStr, &pos);
+	if (pos != numStr.length())
+		throw std::runtime_error("Not an integer input: " + numStr);
+	if (num < 0)
+		throw std::out_of_range("Not a positive integer: " + numStr);
+	return num;
+}
+
+//Check final results
+bool	PmergeMe::checkContainers(std::vector<int>& vec, std::deque<int>& deq)
+{
+	if (!std::is_sorted(vec.begin(), vec.end())) {
+		std::cerr << "Vector not sorted properly\n";
+		return false;
+	}
+	if (!std::is_sorted(deq.begin(), deq.end())) {
+		std::cerr << "Deque not sorted properly\n";
+		return false;
+	}
+	if (vec.size() != deq.size()) {
+		std::cerr << "Vec and deq don't have the same number of elements\n";
+		return false;
+	}
+	for (size_t idx = 0; idx < vec.size(); idx++) {
+		if (vec[idx] != deq[idx]) {
+			std::cerr << "Vec and deq don't have the same elements\n";
+			return false;
+		}
+	}
+	return true;
+}
+
+//shared helper function to determine optimal order to insert elements from pend to main
+std::vector<int>	PmergeMe::optimalOrder(size_t pendSize) {
+	std::vector<int>	jacobSeq = generateJacob(pendSize);
+	std::vector<int>	indexOrder;
+	std::vector<bool>	usedIndex(pendSize, false);
+	
+	for (int x : jacobSeq) {
+		if (x > 0 ) {
+			int i = x;
+			while (i >= 1 && !usedIndex[i]) {
+				indexOrder.push_back(i);
+				usedIndex[i] = true;
+				i--;
+			}
+		}
+	}
+	
+	if (indexOrder.size() + 1 < pendSize) {
+		for (int i = pendSize - 1; i >= 1; i--) {
+			if (!usedIndex[i]) {
+				indexOrder.push_back(i);
+				usedIndex[i] = true;
+			}
+		}
+	}
+	
+	return indexOrder;
+}
+
 //shared helper function to generate Jacobsthal sequence
 std::vector<int>	PmergeMe::generateJacob(size_t quantity) {
 	std::vector<int>	sequence;
@@ -21,34 +85,6 @@ std::vector<int>	PmergeMe::generateJacob(size_t quantity) {
 	return sequence;
 }
 
-//shared helper function to determine optimal order to insert elements from pend to main
-std::vector<int>	PmergeMe::optimalOrder(size_t pendSize) {
-	std::vector<int>	jacobSeq = generateJacob(pendSize);
-	std::vector<int>	indexOrder;
-	std::vector<bool>	usedIndex(pendSize, false);
-
-	for (int x : jacobSeq) {
-		if (x > 0 ) {
-			int i = x;
-			while (i >= 1 && !usedIndex[i]) {
-				indexOrder.push_back(i);
-				usedIndex[i] = true;
-				i--;
-			}
-		}
-	}
-
-	if (indexOrder.size() + 1 < pendSize) {
-		for (int i = pendSize - 1; i >= 1; i--) {
-			if (!usedIndex[i]) {
-				indexOrder.push_back(i);
-				usedIndex[i] = true;
-			}
-		}
-	}
-	
-	return indexOrder;
-}
 
 //Sort using vector
 void	PmergeMe::sortFoJo(std::vector<int>& chain)  {
