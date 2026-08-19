@@ -41,7 +41,7 @@ int	RPN::calculate(std::string& problem) {
 		else if (token.length() == 1 && (token[0] == '+'
 			|| token[0] == '-' || token[0] == '*' || token[0] == '/'))
 		{
-			if (stk.size() != 2)
+			if (stk.size() < 2)
 				throw std::logic_error("Not enough param for calculation");
 			int	right = stk.top();
 			stk.pop();
